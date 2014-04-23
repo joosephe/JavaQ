@@ -1,4 +1,4 @@
-LANG
+JavaQ
 ====
 
 Tartu Ülikooli aine AKT projekt, rühm 9
