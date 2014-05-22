@@ -4,7 +4,7 @@ public class QuantumState {
 	
 	public Complex[] stateVector;
 	
-	
+	//blah
 	public QuantumState(Qubit a){
 		Complex[] v = new Complex[2];
 		v[0]= a.noPart;
