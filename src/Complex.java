@@ -51,7 +51,26 @@ public class Complex {
 	
 	
 	
-	
+	public Complex scalarProduct(Complex[] a, Complex[] b){
+		Complex c= new Complex();
+		if(a.length!=b.length){
+			try {
+				throw new Exception("Lengths of vectors must match for scalar product.") ;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			for(int i=0;i<a.length;i++){
+				c=Add(c, Multiply(a[i], conjugate(b[i])));
+			}			
+		}
+		
+
+		return c;
+		
+	}
 	
 	
 	
