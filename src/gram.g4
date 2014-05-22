@@ -1,8 +1,5 @@
-grammar JavaQ;
+grammar gram;
 
-@header {
-package javaQ;
-}
 
 
 /*
@@ -26,7 +23,10 @@ Def 2. SĆµnede hulgad on parajasti need, mida saab koostada jĆ¤rgmiste reegl
   Kuna meid hetkel huvitab ainult kĆ¼simus, kas etteantud sĆµne kuulub keelde vĆµi mitte,
   siis tehete prioriteedid ei ole siin olulised.
 */
-
+program
+	:function program
+	|function
+	;
 function
     : 'circuit' type functionCall '{' statements '}'
     ;
