@@ -81,11 +81,24 @@ paramValue
 	| number
 	;
 type
-	:Sym type
-	|Sym
+	:'int'
+	|'float'
+	|'bool'
+	|'complex'
+	|'qubit'
+	|'transformation'
+	|'gate'
+	|'string'
+	|'char'
+	|'measurement'
+	|'state'
+	|'ensemble'
 	;
 nameBegin
-	:Sym name
+	:Sym2 name
+	|Sym2
+	|Sym name
+	|Sym
 	;
 name
 	:charSeq name
