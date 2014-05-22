@@ -1,19 +1,25 @@
 
 public class Complex {
 	
+	//Complex number z has a real an imaginary part
+	//We write z=a+bi, where i is a special number that satisfies i*i=-1;
 	float re;
 	float im;
 	
+	//Default initialization sets the number to (0,0)=0+0i=0
 	public Complex(){
 		this.re=0;
 		this.im=0;
 	}
 	
-	public Complex(float r, float i){
-		this.re =r;
-		this.im=i;
+	//Generally we initialize as z=a+bi
+	public Complex(float a, float b){
+		this.re =a;
+		this.im=b;
 	}
 	
+	
+	//(a+bi)+(c+di)=(a+c)+ (b+d)i
 	public static Complex Add(Complex a, Complex b){
 		Complex c= new Complex();
 		c.re=a.re+b.re;
@@ -21,6 +27,7 @@ public class Complex {
 		return c;
 	}
 	
+	//(a+bi)-(c+di)=(a-c)+ (b-d)i
 	public static Complex Subtract(Complex a, Complex b){
 		Complex c= new Complex();
 		c.re=a.re-b.re;
@@ -28,6 +35,8 @@ public class Complex {
 		return c;
 	}
 	
+	//(a+bi)*(c+di)=(ac-bd)+ (bc+ad)i
+
 	public static Complex Multiply(Complex a, Complex b){
 		Complex c= new Complex();
 		c.re=(a.re*b.re)-(a.im*b.im);
@@ -36,12 +45,15 @@ public class Complex {
 	}
 	
 	
-	
+	//Modulus of a complex number is defined as|a+bi|= \sqrt{a*a+b*b}
+	//note that modulus is always a non-negative real number.
 	public float Modulus(Complex a){
 		float mod = (float) Math.sqrt((a.re*a.re)+(a.im+a.im));
 		return mod;
 	}
 	
+	
+	//conjugate of a+bi is a-bi
 	public Complex conjugate(Complex a){
 		Complex b= new Complex();
 		b.re=a.re;
@@ -51,6 +63,11 @@ public class Complex {
 	
 	
 	
+	
+	//scalar product of two complex vectors (a_1,..,a_n) and (b_1,..,b_n) is
+	//a_1*b_1'+a_2*b_2'+..+a_n*b_n'
+	//where b_i' is the conjugate of b_i
+	//The lengths of the vectors must match.
 	public Complex scalarProduct(Complex[] a, Complex[] b){
 		Complex c= new Complex();
 		if(a.length!=b.length){
@@ -71,6 +88,21 @@ public class Complex {
 		return c;
 		
 	}
+	//Returns the norm of a vector
+	//norm is defined as the square root of the scalar product of a vector with itself
+	
+	//note that a_i*a_i' is equal to the modulus of a_i and is thus a real number
+	//thus the scalar product of a vector with itself is a non-negative real number
+	//thus we can take only the real part of the scalar product, as the complex part is zero.
+	public float norm(Complex[] a){
+		Complex c= new Complex();
+		c= scalarProduct(a,a);
+		float answer =(float)Math.sqrt(c.re);
+		return answer;
+	}
+
+	
+	
 	
 	
 	
