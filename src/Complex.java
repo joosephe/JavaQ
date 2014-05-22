@@ -47,14 +47,14 @@ public class Complex {
 	
 	//Modulus of a complex number is defined as|a+bi|= \sqrt{a*a+b*b}
 	//note that modulus is always a non-negative real number.
-	public float Modulus(Complex a){
+	public static float Modulus(Complex a){
 		float mod = (float) Math.sqrt((a.re*a.re)+(a.im+a.im));
 		return mod;
 	}
 	
 	
 	//conjugate of a+bi is a-bi
-	public Complex conjugate(Complex a){
+	public static Complex conjugate(Complex a){
 		Complex b= new Complex();
 		b.re=a.re;
 		b.im=-a.im;
@@ -68,7 +68,7 @@ public class Complex {
 	//a_1*b_1'+a_2*b_2'+..+a_n*b_n'
 	//where b_i' is the conjugate of b_i
 	//The lengths of the vectors must match.
-	public Complex scalarProduct(Complex[] a, Complex[] b){
+	public static Complex scalarProduct(Complex[] a, Complex[] b){
 		Complex c= new Complex();
 		if(a.length!=b.length){
 			try {
@@ -94,7 +94,7 @@ public class Complex {
 	//note that a_i*a_i' is equal to the modulus of a_i and is thus a real number
 	//thus the scalar product of a vector with itself is a non-negative real number
 	//thus we can take only the real part of the scalar product, as the complex part is zero.
-	public float norm(Complex[] a){
+	public static float norm(Complex[] a){
 		Complex c= new Complex();
 		c= scalarProduct(a,a);
 		float answer =(float)Math.sqrt(c.re);
