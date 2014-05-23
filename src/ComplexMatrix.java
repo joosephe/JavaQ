@@ -119,7 +119,7 @@ public class ComplexMatrix {
 			ComplexMatrix mult = multiply(a,aprim);
 			//Now we need to check whether a*a' ?=I
 			return isIdentity(mult);
-			// 
+			//  
 			
 		}
 	}
