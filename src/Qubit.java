@@ -7,7 +7,7 @@ public class Qubit {
 	
 	
 	//We initialize qubit with a vector of two complex numbers.
-	//blah
+	//blahh
 		public Qubit(Complex[] a){
 			if(a.length!=2){
 				
