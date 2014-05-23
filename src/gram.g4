@@ -24,19 +24,19 @@ Def 2. SĆµnede hulgad on parajasti need, mida saab koostada jĆ¤rgmiste reegl
   siis tehete prioriteedid ei ole siin olulised.
 */
 program
-	:function program
-	|function
+	:function+
 	;
 function
-    : 'circuit' type functionCall '{' statements '}'
+    : 'circuit' type functionInit '{' statements '}'
     ;
+functionInit
+	:name '(' initParameters? ')'
+	;
 functionCall
-	:name '(' parameters ')'
-	|name '()'
+	:name '(' parameters?  ')'
 	;
 statements
-	:statement ';' statements
-	|statement ';'
+	:(statement ';')+
 	;
 statement
 	:functionCall
@@ -44,6 +44,7 @@ statement
 	|paramInits '=' paramValues
 	|loops
 	|conditionals
+	|expression
 	;
 paramInits
 	:parameter
@@ -55,13 +56,54 @@ paramValues
 	|paramValue
 	|name
 	;
+initParameters
+	:parameter (',' parameter)*
+	;
 parameters
-	:parameter ',' parameters
-	|parameter
+	:functionCallParameter (',' functionCallParameter)*
 	;
 parameter
 	:type name
 	;
+functionCallParameter
+	:functionCall
+	|paramInits '=' paramValues
+	|name
+	|paramValue
+	;
+expression
+	:expression0
+	;
+expression0
+    :   expression1 ('>'|'<'|'>='|'<='|'=='|'!=') expression1     
+    |   expression1                                       
+    ;
+
+expression1
+    :   expression1 ('+'|'-') expression2                     
+    |   expression2                                       
+    ;
+
+expression2
+    :  expression2 ('*'|'/') expression3                     # KorrutamineJagamine
+    |   expression3                                        # TriviaalneAvaldis3
+    ;
+
+expression3
+    :   '-' expression3                                    # UnaarneMiinus
+    |   expression4                                        # TriviaalneAvaldis2
+    ;
+
+expression4
+    :   MuutujaNimi '(' (expression (',' expression)*)? ')'   # FunktsiooniValjakutse
+    |   expression5                                        # TriviaalneAvaldis1
+    ;
+
+expression5
+    :   Name    
+    |   Number   
+    |   String   
+    ;
 loops
 	:'for' '(' forConditions ')' '{' statements '}'
 	|'while' '(' conditions ')' '{' statements '}'
