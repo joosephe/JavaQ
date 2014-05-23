@@ -20,7 +20,9 @@ public class ComplexMatrix {
 	}
 	
 	
-	//initializes complex matrix with 
+	//initializes complex matrix with a bunch of complex numbers.
+	//maybe we should just keep these functions in the class Complex?
+	//nah.
 	public ComplexMatrix(Complex[][] a){
 		this.rowCount=a.length;
 		this.colCount=a[0].length;
@@ -59,13 +61,13 @@ public class ComplexMatrix {
 			}
 		}
 		else{
-			Complex[][] mat = new Complex[first.rowCount][second.colCount];
+			//Complex[][] mat = new Complex[first.rowCount][second.colCount];
 			for(int i=0;i<first.rowCount;i++){
 				//Complex[] row = first.elems[i];
 				for(int j=0;j<second.colCount;j++){
 					//Complex[] col = new Complex[second.rowCount];
 					for(int k=0;k<second.rowCount;k++){
-						result.elems[i][j]=Complex.Add(mat[i][j],Complex.Multiply(first.elems[i][k],second.elems[k][j]));
+						result.elems[i][j]=Complex.Add(result.elems[i][j],Complex.Multiply(first.elems[i][k],second.elems[k][j]));
 						//col[k]=second.elems[k][j];
 					}
 					//nope!
@@ -123,6 +125,8 @@ public class ComplexMatrix {
 			
 		}
 	}
+	
+	
 	
 
 }
