@@ -100,7 +100,36 @@ public class Complex {
 		float answer =(float)Math.sqrt(c.re);
 		return answer;
 	}
-
+	
+	public static boolean isEqual(Complex a, Complex b){
+		if((a.re==b.re)&&(a.im==b.im)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+//not necessary
+	/*
+	public static boolean isZero(Complex a){
+		if((a.re==0)&&(a.im==0)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public static boolean isOne(Complex a){
+		if((a.re==1)&&(a.im==0)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	*/
 	
 	
 	
