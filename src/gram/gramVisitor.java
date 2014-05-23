@@ -1,4 +1,4 @@
-// Generated from gram.g4 by ANTLR 4.2
+// Generated from gram.g4 by ANTLR 4.2.2
 package gram;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -101,13 +101,6 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionCall(@NotNull gramParser.FunctionCallContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#nameBegin}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNameBegin(@NotNull gramParser.NameBeginContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#parameter}.

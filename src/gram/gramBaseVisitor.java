@@ -1,4 +1,4 @@
-// Generated from gram.g4 by ANTLR 4.2
+// Generated from gram.g4 by ANTLR 4.2.2
 package gram;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -115,14 +115,6 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitFunctionCall(@NotNull gramParser.FunctionCallContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitNameBegin(@NotNull gramParser.NameBeginContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

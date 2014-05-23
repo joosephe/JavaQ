@@ -31,8 +31,8 @@ function
     : 'circuit' type functionCall '{' statements '}'
     ;
 functionCall
-	:nameBegin '(' parameters ')'
-	|nameBegin '()'
+	:name '(' parameters ')'
+	|name '()'
 	;
 statements
 	:statement ';' statements
@@ -48,12 +48,12 @@ statement
 paramInits
 	:parameter
 	|functionCall
-	|nameBegin
+	|name
 	;
 paramValues
 	:functionCall
 	|paramValue
-	|nameBegin
+	|name
 	;
 parameters
 	:parameter ',' parameters
@@ -94,17 +94,11 @@ type
 	|'state'
 	|'ensemble'
 	;
-nameBegin
-	:Sym2 name
-	|Sym2
-	|Sym name
-	|Sym
-	;
 name
-	:charSeq name
-	|number name
-	|charSeq
-	|number
+	:Sym charSeq
+	|Sym
+	|Sym2 charSeq
+	|Sym2
 	;
 string
 	: '"' 'anything' '"'
@@ -114,6 +108,8 @@ charSeq
 	|Sym charSeq
 	|Sym2
 	|Sym
+	|number charSeq
+	|number
 	;
 number
 	:Num number
