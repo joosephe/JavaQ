@@ -109,7 +109,7 @@ public class ComplexMatrix {
 	
 	//returns true if two matrices are equal
 	public static boolean isEqual(ComplexMatrix a, ComplexMatrix b){
-		if(a.rowCount!=a.colCount){
+		if(a.rowCount!=b.rowCount||a.colCount!=b.colCount){
 			return false;
 		}
 		else{
@@ -117,6 +117,7 @@ public class ComplexMatrix {
 				//Complex[] row = first.elems[i];
 				for(int j=0;j<a.colCount;j++){
 					if(!Complex.isEqual(a.elems[i][j],b.elems[i][j])){
+						
 						return false;
 					}
 				}

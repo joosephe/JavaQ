@@ -21,7 +21,19 @@ public class Qubit {
 			this.noPart =a[0];
 			this.yesPart=a[1];
 			float n = Complex.norm(a);
-			if(n!=1.0){
+			double epsilon = 0.00001;
+			
+			double diff;
+			if(n>=1.0){
+				diff=n-1.0;
+			}
+			else{
+				diff=1.0-n;
+			}
+			//this was bad since 
+			//if(n!=1.0){
+			//if((n-1.0)*(n-1.0)>epsilon){
+			if(diff>epsilon){
 				
 				try {
 					throw new Exception("To initialize qubit, the norm of the vector must be 1.") ;

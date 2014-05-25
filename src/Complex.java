@@ -19,6 +19,12 @@ public class Complex {
 	}
 	
 	
+	public Complex(double d, double e) {
+		this.re =(float)d;
+		this.im=(float)e;
+		// TODO Auto-generated constructor stub
+	}
+
 	//(a+bi)+(c+di)=(a+c)+ (b+d)i
 	public static Complex Add(Complex a, Complex b){
 		Complex c= new Complex();

@@ -103,18 +103,46 @@ public class random {
 		System.out.println();
 		ComplexMatrix.printComMat(id);
 		System.out.println(ComplexMatrix.isIdentity(id));
+		ComplexMatrix.printComMat(com2);
 		System.out.println(ComplexMatrix.isUnitary(id));
-
 		ComplexMatrix.printComMat(ComplexMatrix.multiply(com2, id));
-		ComplexMatrix.printComMat(ComplexMatrix.multiply(id, com2));
+		//ComplexMatrix.printComMat(ComplexMatrix.multiply(id, com2));
+		System.out.println(ComplexMatrix.isEqual(id,ComplexMatrix.multiply(com2, id)));
 
-		
 
 
 	}
 	
 	
 	public static void QubitTests(){
+		Complex zero= new Complex();
+		Complex one= new Complex(1,0);
+		Complex onei = new Complex(1,1);
+		Complex twominusi= new Complex(2,-1);
+		Complex minusonetwoi = new Complex(-1,2);
+		Complex a = new Complex(0.8,0.0);
+		Complex b = new Complex(0.0,0.6);
+		//Complex c = new Complex(0.7071067812,0.0);
+		
+		//When checking whether the norm is 1, we have to pay attention to roundings.
+		//So we must also accept answers that are approximately one.
+		Complex c = new Complex(Math.sqrt(0.3),0.0);
+		Complex d = new Complex(Math.sqrt(0.7),0.0);
+
+
+		Complex[] oneVec = new Complex[3];
+		oneVec[0]=zero;
+		oneVec[1]=onei;
+		oneVec[2]=twominusi;
+		Complex[] twoVec = new Complex[2];
+		twoVec[0]=c;
+		twoVec[1]=d;
+		
+		
+		//Qubit qu = new Qubit(oneVec);
+		Qubit qu2 = new Qubit(twoVec);
+
+		
 		
 	}
 	
@@ -127,7 +155,9 @@ public class random {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String asd = "circuit bool tere() { tere() ;int a;tere();}";
-		createParseTree(asd);
+		//createParseTree(asd);
+		//testComplexMatrix();
+		//QubitTests();
 	}
 	private static ParseTree createParseTree(String program) {
 	    ANTLRInputStream antlrInput = new ANTLRInputStream(program);
