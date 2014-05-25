@@ -119,7 +119,38 @@ public class Measurement{
 		return Complex.norm(col)*Complex.norm(col);
 		
 	}
+	//TODO: test this
+	public static QuantumState stateAfterMeasurement(QuantumState st, ComplexMatrix me){
+		ComplexMatrix vec = new ComplexMatrix(st.stateVector.length,1);
+		//QuantumState resQu = new QuantumState(st.stateVector.length,1);
+
+		for(int i = 0;i<st.stateVector.length;i++){
+			vec.elems[i][0]=st.stateVector[i];
+		}
+		//compute the product
+		ComplexMatrix result = ComplexMatrix.multiply(me, vec);
+		
+		//but now we must normalize this and cast it back to a QuantumState.
+		Complex [] col= new Complex[st.stateVector.length];
+		for(int i=0;i<st.stateVector.length;i++){
+			col[i]=result.elems[i][0];
+		}
+		//Normalize the product
+		float factor = Complex.norm(col);
+		for(int i = 0;i<st.stateVector.length;i++){
+			result.elems[i][0]=Complex.Divide(result.elems[i][0], factor);
+		}
+		
+		for(int i=0;i<st.stateVector.length;i++){
+			st.stateVector[i]=result.elems[i][0];
+		}
+
+		return st;
+		
+	}
 	
+	
+	//TODO: test this.
 	public static int apply(QuantumState qu, Measurement me){
 		//first cast quantumstate into a  matrix
 		Random rand = new Random();
@@ -145,8 +176,20 @@ public class Measurement{
 		
 		//returns the index of the element that got randomly chosen.
 		
-		//TODO: write apply method
 		return i-1;
+	}
+	
+	
+	//TODO: test this
+	public static QuantumState measure(QuantumState qu, Measurement me){
+		//we measure a matrix.
+		int meas = apply(qu,me);
+		//but the matrix now changes. based on what we measured.
+		//it would be great if both the matrix could change and that 
+		qu= stateAfterMeasurement( qu,  me.proj[meas]);
+		
+		
+		return qu;
 	}
 	
 	public static boolean apply(Qubit qb, Measurement me){

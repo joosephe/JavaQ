@@ -84,6 +84,13 @@ public class Complex {
 		c.im=(a.re*b.im)+(a.im*b.re);
 		return c;
 	}
+	//TODO: test this
+	public static Complex Divide(Complex a, float b){
+		Complex c= new Complex();
+		c.re=a.re/b;
+		c.im=a.im/b;
+		return c;
+	}
 	
 	
 	//Modulus of a complex number is defined as|a+bi|= \sqrt{a*a+b*b}
@@ -102,6 +109,7 @@ public class Complex {
 		return mod;
 	}
 	
+	//TODO:test this.
 	public static float ModulusSquare(Complex a){
 		float mod = (float)((a.re*a.re)+(a.im*a.im));
 		//System.out.println(a.re+ " is a.re");
