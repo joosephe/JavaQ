@@ -52,6 +52,16 @@ public class Transformation extends ComplexMatrix {
 	}
 	
 	
+	//this sort of destroys the values of this ensemble maybe? whatever.
+	public static Ensemble apply(Ensemble en, Transformation tr){
+		for(int i=0;i<en.size;i++){
+			en.states[i]=apply(en.states[i],tr);
+		}
+		return en;
+		
+	}
+	
+	
 	public static Transformation tensorProd (Transformation first, Transformation second){
 		int newRow=first.rowCount*second.rowCount;
 		int newCol=first.colCount*second.colCount;
@@ -74,6 +84,7 @@ public class Transformation extends ComplexMatrix {
 		//TODO: write tensor product
 		return result;
 	}
+	
 	
 
 	//public Complex [][] elems;

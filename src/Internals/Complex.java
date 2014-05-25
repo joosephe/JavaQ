@@ -27,6 +27,36 @@ public class Complex {
 	}
 
 	public Complex(String value) {
+		//String[] parts = value.split(",");
+		//now we have supposedly a thing that looks like a, -a, bi,-bi, a+bi,a-bi, -a+bi,-a-bi
+		boolean rePos=true;
+		boolean imPos=true;
+		boolean hasRe=true;
+		boolean hasIm=true;
+		
+		
+		if(value.charAt(value.length())!='i'){
+			hasIm=false;
+			this.im=0;
+			
+		}
+		else{
+			//we now search for + or -
+			int plus = value.indexOf('+');
+			int minus = value.indexOf('-');
+			
+			if(minus==0){
+				int plus2 = value.indexOf('+',1);
+				int minus2 = value.indexOf('-',1);
+				
+			}
+
+			
+		}
+		
+		
+		
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -60,6 +90,29 @@ public class Complex {
 	//note that modulus is always a non-negative real number.
 	public static float Modulus(Complex a){
 		float mod = (float) Math.sqrt((a.re*a.re)+(a.im*a.im));
+		//System.out.println(a.re+ " is a.re");
+		//System.out.println(a.re*a.re+ " is a.re*a.re");
+		//System.out.println(a.im+ " is a.im");
+		//System.out.println(a.im*a.im+ " is a.im*a.im");
+
+
+
+		//System.out.println(mod+ " is mod");
+
+		return mod;
+	}
+	
+	public static float ModulusSquare(Complex a){
+		float mod = (float)((a.re*a.re)+(a.im*a.im));
+		//System.out.println(a.re+ " is a.re");
+		//System.out.println(a.re*a.re+ " is a.re*a.re");
+		//System.out.println(a.im+ " is a.im");
+		//System.out.println(a.im*a.im+ " is a.im*a.im");
+
+
+
+		//System.out.println(mod+ " is mod");
+
 		return mod;
 	}
 	
