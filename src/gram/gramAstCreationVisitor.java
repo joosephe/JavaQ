@@ -15,6 +15,7 @@ import ee.ut.cs.akt.aktk.ast.Assignment;
 import ee.ut.cs.akt.aktk.ast.AstNode;
 import ee.ut.cs.akt.aktk.ast.Block;
 import ee.ut.cs.akt.aktk.ast.Expression;
+import ee.ut.cs.akt.aktk.ast.ExpressionStatement;
 import ee.ut.cs.akt.aktk.ast.FloatingPointLiteral;
 import ee.ut.cs.akt.aktk.ast.FunctionCall;
 import ee.ut.cs.akt.aktk.ast.IntegerLiteral;
@@ -34,6 +35,7 @@ import gram.gramParser.MultipleComparisonsContext;
 import gram.gramParser.MultiplicationDivisionContext;
 import gram.gramParser.NameRContext;
 import gram.gramParser.NumberRContext;
+import gram.gramParser.StatementContext;
 import gram.gramParser.StatementsContext;
 import gram.gramParser.StringRContext;
 import gram.gramParser.UnaryNegationContext;
@@ -161,6 +163,7 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 
 	@Override
 	public AstNode visitFunction(FunctionContext ctx) {
+		System.out.println("I am at function");
 		String type = ctx.getChild(1).getChild(0).getText();
 		String name = ctx.getChild(2).getText();
 		Expression params = null;
@@ -184,6 +187,17 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 		Expression left = (Expression)this.visit(ctx.getChild(0));
 		Expression right = (Expression)this.visit(ctx.getChild(2));
 		return new FunctionCall(operator , Arrays.asList(left, right));
+	}
+
+	@Override
+	public AstNode visitStatement(StatementContext ctx) {
+		AstNode child = this.visit(ctx.getChild(0)); 
+		if (child instanceof Expression) {
+			return new ExpressionStatement((Expression) child);
+		} 
+		else {
+			return child;
+		}
 	}
 
 }
