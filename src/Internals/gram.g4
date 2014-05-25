@@ -13,18 +13,17 @@ statements
 	:(statement ';')+
 	;
 statement
-	:parameter ('[' Integer ']')*
+	:declaration
 	|value
 	|loops
 	|conditionals
 	|expression
 	;
 value
-	:paramInits ('[' Integer ']')*  '=' (expression | ('[' expression ']')+)
+	:Name ('[' Integer ']')*  '=' (expression | ('[' expression ']')+)
 	;
-paramInits
-	:parameter 
-	|Name
+declaration
+	:parameter ('[' Integer ']')*  ('=' (expression | ('[' expression ']')+))?
 	;
 initParameters
 	:parameter (',' parameter)*
@@ -66,11 +65,17 @@ expression5
     |   String   
     ;
 loops
+	: forLoop
+	| whileLoop
+	;
+forLoop
 	:'for' '(' forConditions ')' '{' statements '}'
-	|'while' '(' expression ')' '{' statements '}'
+	;
+whileLoop
+	:'while' '(' expression ')' '{' statements '}'
 	;
 forConditions
-	: (value (','value)*)? ';' expression ';' (statement (',' statement)*)?
+	: ((value | declaration) (','(value | declaration))*)? ';' expression ';' (statement (',' statement)*)?
 	;
 conditionals
 	:'if' '(' expression ')' '{' statements '}'
@@ -99,9 +104,6 @@ String
 	: '"' ~["\n\r] '"'
 	;
 Number
-	:[1-9] [0-9]*
-	|[1-9] [0-9]* '.' [0-9]+
-	|[0]
-	|[0] '.' [0-9]+
+	:([0] | ([1-9] [0-9]*)) ('.' [0-9]+)?
 	;
 WS  : [ \t\n] -> skip;
