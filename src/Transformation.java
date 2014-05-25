@@ -22,7 +22,7 @@ public class Transformation extends ComplexMatrix {
 		ComplexMatrix vec = new ComplexMatrix(2,1);
 		vec.elems[0][0]=qb.noPart;
 		vec.elems[1][0]=qb.yesPart;
-		//we multiply the transformation with the qubit 
+		//we multiply the transformation with the qubit  
 		ComplexMatrix result = multiply(tr, vec);
 		qb.noPart=result.elems[0][0];
 		qb.yesPart=result.elems[1][0];

@@ -30,7 +30,7 @@ public class Qubit {
 			else{
 				diff=1.0-n;
 			}
-			//this was bad since 
+			//this was bad since  
 			//if(n!=1.0){
 			//if((n-1.0)*(n-1.0)>epsilon){
 			if(diff>epsilon){

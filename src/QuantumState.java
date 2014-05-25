@@ -15,7 +15,7 @@ public class QuantumState {
 	//This is sort of like the tensor product part.
 	//We add a new qubit to the Quantum State.
 	//Maybe this should be some other type of a method? 
-	
+	 
 	public  QuantumState (QuantumState qs, Qubit qb){
 		int len = qs.stateVector.length;
 		Complex[] v = new Complex[2*len];
