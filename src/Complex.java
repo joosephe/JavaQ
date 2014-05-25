@@ -48,7 +48,7 @@ public class Complex {
 	//Modulus of a complex number is defined as|a+bi|= \sqrt{a*a+b*b}
 	//note that modulus is always a non-negative real number.
 	public static float Modulus(Complex a){
-		float mod = (float) Math.sqrt((a.re*a.re)+(a.im+a.im));
+		float mod = (float) Math.sqrt((a.re*a.re)+(a.im*a.im));
 		return mod;
 	}
 	
@@ -109,6 +109,17 @@ public class Complex {
 			return false;
 		}
 	}
+	
+	public static void printCom(Complex a){
+		 System.out.print(a.re+ " + "+ a.im+"i ");
+	}
+	
+	public static void printCom(Complex[] a){
+		for(int i=0;i<a.length;i++){
+			printCom(a[i]);
+		}
+	}
+	
 	
 //not necessary
 	/*
