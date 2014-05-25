@@ -61,9 +61,9 @@ expression4
     ;
 
 expression5
-    :   Name    
-    |   Number   
-    |   String   
+    :   Name    # NameR
+    |   Number   # NumberR
+    |   String   # StringR
     ;
 loops
 	: forLoop
@@ -82,18 +82,18 @@ conditionals
 	:'if' '(' expression ')' '{' statements '}' ('elseif' '(' expression ')' '{' statements '}')* ('else' '{' statements '}')?
 	;
 type
-	:'int'
-	|'float'
-	|'bool'
-	|'complex'
-	|'qubit'
-	|'transformation'
-	|'gate'
-	|'string'
-	|'char'
-	|'measurement'
-	|'state'
-	|'ensemble'
+	:'int' 	# IntegerType
+	|'float'	# FloatType
+	|'bool'	# BoolType
+	|'complex'	# ComplexType
+	|'qubit'	# QubitType
+	|'transformation'	# TransformationType
+	|'gate'	# GateType
+	|'string'	# StringType
+	|'char'	# CharType
+	|'measurement'	# MeasurementType
+	|'state'	# StateType
+	|'ensemble'	# EnsembleType
 	;
 Integer
 	:([1-9][0-9]*)|[0]
