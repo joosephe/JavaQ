@@ -32,31 +32,32 @@ parameter
 	:type Name
 	;
 expression
-	:expression0 ( ( '|' | ' &') expression0)*
+	:expression  ( '|' | ' &') expression0  				# MultipleComparisons
+	|expression0											# TrivialExpression
 	;
 expression0
-    :   expression1 ('>'|'<'|'>='|'<='|'=='|'!=') expression1     
-    |   expression1                                       
+    :   expression1 ('>'|'<'|'>='|'<='|'=='|'!=') expression1     # Comparison
+    |   expression1                                       			# TrivialExpression0
     ;
 
 expression1
-    :   expression1 ('+'|'-') expression2                     
-    |   expression2                                       
+    :   expression1 ('+'|'-') expression2                     # AddingSubstraction
+    |   expression2                                       	# TrivialExpression1
     ;
 
 expression2
-    :  expression2 ('*'|'/') expression3                     # KorrutamineJagamine
-    |   expression3                                        # TriviaalneAvaldis3
+    :  expression2 ('*'|'/') expression3                     # MultiplicationDivision
+    |   expression3                                        # TrivialExpression2
     ;
 
 expression3
-    :   '-' expression3                                    # UnaarneMiinus
-    |   expression4                                        # TriviaalneAvaldis2
+    :   '-' expression3                                    # UnaryNegation
+    |   expression4                                        # TrivialExpression3
     ;
 
 expression4
-    :   Name '(' (expression (',' expression)*)? ')'   # FunktsiooniValjakutse
-    |   expression5                                        # TriviaalneAvaldis1
+    :   Name '(' (expression (',' expression)*)? ')'   # FunctionCall
+    |   expression5                                        # TrivialExpression4
     ;
 
 expression5
@@ -78,7 +79,7 @@ forConditions
 	: ((value | declaration) (','(value | declaration))*)? ';' expression ';' (statement (',' statement)*)?
 	;
 conditionals
-	:'if' '(' expression ')' '{' statements '}'
+	:'if' '(' expression ')' '{' statements '}' ('elseif' '(' expression ')' '{' statements '}')* ('else' '{' statements '}')?
 	;
 type
 	:'int'
