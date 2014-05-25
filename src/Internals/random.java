@@ -5,9 +5,11 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import Parser.Visitor;
+import ee.ut.cs.akt.aktk.ast.AstNode;
+
 import gram.gramLexer;
 import gram.gramParser;
+import gram.gramParsingUtils;
 
 public class random {
 	//this probably should be put in its own file
@@ -146,8 +148,8 @@ public class random {
 		//Qubit qu = new Qubit(oneVec);
 		Qubit qu2 = new Qubit(twoVec);
 		//Qubit.printQub(qu2);
-		Ensemble en =new Ensemble(qu2);
-		Ensemble.printEnsemble(en);
+		//Ensemble en =new Ensemble(qu2);
+		//Ensemble.printEnsemble(en);
 
 	}
 	
@@ -158,10 +160,13 @@ public class random {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		initialArgs = args;
+		//initialArgs = args;
+
+		System.out.println("siia küll jõudsin");
 		String asd = "circuit bool tere(int a) { tere() ;int a;tere();}";
-		
-		QubitTests();
+		AstNode ast = gramParsingUtils.createAst(asd);
+		System.out.println(ast.toString());
+		//QubitTests();
 		/*
 		ParseTree tree = createParseTree(asd);
 		Visitor foo = new Visitor(tree);
@@ -173,7 +178,7 @@ public class random {
 		}
 		//System.out.println(foo.getResult());*/
 	}
-
+/*
 	private static ParseTree createParseTree(String program) {
 	    ANTLRInputStream antlrInput = new ANTLRInputStream(program);
 	    gramLexer lexer = new gramLexer(antlrInput);
@@ -182,5 +187,5 @@ public class random {
 	    ParseTree tree = parser.program();	    
 	    System.out.println(tree.toStringTree(parser));
 	    return tree;
-	}
+	}*/
 }

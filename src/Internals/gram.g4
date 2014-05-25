@@ -20,7 +20,7 @@ value
 	:Name  '=' expression
 	;
 declaration
-	:parameter '=' expression 
+	:parameter ('=' expression )?
 	;
 initParameters
 	:parameter (',' parameter)*
@@ -70,18 +70,18 @@ conditionals
 	:'if' '(' expression ')' '{' statements '}' ('elseif' '(' expression ')' '{' statements '}')* ('else' '{' statements '}')?
 	;
 type
-	:'int' 	# IntegerType
-	|'float'	# FloatType
-	|'bool'	# BoolType
-	|'complex'	# ComplexType
-	|'qubit'	# QubitType
-	|'transformation'	# TransformationType
-	|'gate'	# GateType
-	|'string'	# StringType
-	|'char'	# CharType
-	|'measurement'	# MeasurementType
-	|'state'	# StateType
-	|'ensemble'	# EnsembleType
+	:'int' 	
+	|'float'	
+	|'bool'	
+	|'complex'	
+	|'qubit'	
+	|'transformation'	
+	|'gate'
+	|'string'	
+	|'char'	
+	|'measurement'	
+	|'state'	
+	|'ensemble'	
 	;
 Integer
 	:([1-9][0-9]*)|[0]

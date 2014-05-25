@@ -26,13 +26,6 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitNameR(@NotNull gramParser.NameRContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#IntegerType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntegerType(@NotNull gramParser.IntegerTypeContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link gramParser#AddingSubstraction}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -40,18 +33,18 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitAddingSubstraction(@NotNull gramParser.AddingSubstractionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link gramParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(@NotNull gramParser.TypeContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link gramParser#TrivialExpression0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTrivialExpression0(@NotNull gramParser.TrivialExpression0Context ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#FloatType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFloatType(@NotNull gramParser.FloatTypeContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#Comparison}.
@@ -89,13 +82,6 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitStringR(@NotNull gramParser.StringRContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#BoolType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolType(@NotNull gramParser.BoolTypeContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link gramParser#TrivialExpression2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -115,27 +101,6 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTrivialExpression1(@NotNull gramParser.TrivialExpression1Context ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#GateType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGateType(@NotNull gramParser.GateTypeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#TransformationType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTransformationType(@NotNull gramParser.TransformationTypeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#MeasurementType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMeasurementType(@NotNull gramParser.MeasurementTypeContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#statements}.
@@ -166,25 +131,11 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitValue(@NotNull gramParser.ValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#StateType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStateType(@NotNull gramParser.StateTypeContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link gramParser#NumberR}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNumberR(@NotNull gramParser.NumberRContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#QubitType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQubitType(@NotNull gramParser.QubitTypeContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#UnaryNegation}.
@@ -194,39 +145,11 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitUnaryNegation(@NotNull gramParser.UnaryNegationContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#EnsembleType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEnsembleType(@NotNull gramParser.EnsembleTypeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#ComplexType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComplexType(@NotNull gramParser.ComplexTypeContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link gramParser#declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDeclaration(@NotNull gramParser.DeclarationContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#CharType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCharType(@NotNull gramParser.CharTypeContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#StringType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStringType(@NotNull gramParser.StringTypeContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#FunctionCall}.

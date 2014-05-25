@@ -9,7 +9,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import ast.ElseIfStatement;
 import ast.Function;
 import ast.IfStatement;
+import ast.Parameter;
 import ast.Parameters;
+import ast.Type;
 import ast.VariableDeclaration;
 import ee.ut.cs.akt.aktk.ast.Assignment;
 import ee.ut.cs.akt.aktk.ast.AstNode;
@@ -35,9 +37,11 @@ import gram.gramParser.MultipleComparisonsContext;
 import gram.gramParser.MultiplicationDivisionContext;
 import gram.gramParser.NameRContext;
 import gram.gramParser.NumberRContext;
+import gram.gramParser.ParameterContext;
 import gram.gramParser.StatementContext;
 import gram.gramParser.StatementsContext;
 import gram.gramParser.StringRContext;
+import gram.gramParser.TypeContext;
 import gram.gramParser.UnaryNegationContext;
 import gram.gramParser.ValueContext;
 
@@ -198,6 +202,19 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 		else {
 			return child;
 		}
+	}
+
+	@Override
+	public AstNode visitParameter(ParameterContext ctx) {
+		Expression type = (Expression) this.visit(ctx.getChild(0));
+		Expression name = (Expression) this.visit(ctx.getChild(1));
+		return new Parameter(type,name);
+	}
+
+	@Override
+	public AstNode visitType(TypeContext ctx) {
+		String name = ctx.getChild(0).getText();
+		return new Type(name);
 	}
 
 }
