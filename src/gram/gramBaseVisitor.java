@@ -1,4 +1,4 @@
-// Generated from gram.g4 by ANTLR 4.2.2
+// Generated from gram.g4 by ANTLR 4.2
 package gram;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -18,7 +18,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTriviaalneAvaldis3(@NotNull gramParser.TriviaalneAvaldis3Context ctx) { return visitChildren(ctx); }
+	@Override public T visitConditionals(@NotNull gramParser.ConditionalsContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -26,7 +26,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitForConditions(@NotNull gramParser.ForConditionsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitNameR(@NotNull gramParser.NameRContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -34,7 +34,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStatements(@NotNull gramParser.StatementsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntegerType(@NotNull gramParser.IntegerTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -42,7 +42,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTriviaalneAvaldis2(@NotNull gramParser.TriviaalneAvaldis2Context ctx) { return visitChildren(ctx); }
+	@Override public T visitAddingSubstraction(@NotNull gramParser.AddingSubstractionContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -50,7 +50,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitProgram(@NotNull gramParser.ProgramContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTrivialExpression0(@NotNull gramParser.TrivialExpression0Context ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -58,7 +58,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTriviaalneAvaldis1(@NotNull gramParser.TriviaalneAvaldis1Context ctx) { return visitChildren(ctx); }
+	@Override public T visitFloatType(@NotNull gramParser.FloatTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -66,7 +66,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitType(@NotNull gramParser.TypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitComparison(@NotNull gramParser.ComparisonContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -82,6 +82,46 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitTrivialExpression4(@NotNull gramParser.TrivialExpression4Context ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTrivialExpression3(@NotNull gramParser.TrivialExpression3Context ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStringR(@NotNull gramParser.StringRContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBoolType(@NotNull gramParser.BoolTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTrivialExpression2(@NotNull gramParser.TrivialExpression2Context ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitParameter(@NotNull gramParser.ParameterContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -90,7 +130,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStatement(@NotNull gramParser.StatementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTrivialExpression1(@NotNull gramParser.TrivialExpression1Context ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -98,7 +138,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParamInits(@NotNull gramParser.ParamInitsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGateType(@NotNull gramParser.GateTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -106,7 +146,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParamValue(@NotNull gramParser.ParamValueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTransformationType(@NotNull gramParser.TransformationTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -114,7 +154,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExpression(@NotNull gramParser.ExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMeasurementType(@NotNull gramParser.MeasurementTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -122,7 +162,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitKorrutamineJagamine(@NotNull gramParser.KorrutamineJagamineContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStatements(@NotNull gramParser.StatementsContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -130,55 +170,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLoops(@NotNull gramParser.LoopsContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitExpression5(@NotNull gramParser.Expression5Context ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitFunctionInit(@NotNull gramParser.FunctionInitContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitExpression0(@NotNull gramParser.Expression0Context ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitExpression1(@NotNull gramParser.Expression1Context ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitUnaarneMiinus(@NotNull gramParser.UnaarneMiinusContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitParamValues(@NotNull gramParser.ParamValuesContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLoop(@NotNull gramParser.LoopContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -194,7 +186,79 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionCallParameter(@NotNull gramParser.FunctionCallParameterContext ctx) { return visitChildren(ctx); }
+	@Override public T visitValue(@NotNull gramParser.ValueContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStateType(@NotNull gramParser.StateTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNumberR(@NotNull gramParser.NumberRContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitQubitType(@NotNull gramParser.QubitTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUnaryNegation(@NotNull gramParser.UnaryNegationContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEnsembleType(@NotNull gramParser.EnsembleTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitComplexType(@NotNull gramParser.ComplexTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDeclaration(@NotNull gramParser.DeclarationContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCharType(@NotNull gramParser.CharTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStringType(@NotNull gramParser.StringTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -210,7 +274,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitConditionals(@NotNull gramParser.ConditionalsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMultiplicationDivision(@NotNull gramParser.MultiplicationDivisionContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -218,7 +282,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitConditions(@NotNull gramParser.ConditionsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStatement(@NotNull gramParser.StatementContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -226,7 +290,7 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParameters(@NotNull gramParser.ParametersContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBraketExpression(@NotNull gramParser.BraketExpressionContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -234,5 +298,21 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunktsiooniValjakutse(@NotNull gramParser.FunktsiooniValjakutseContext ctx) { return visitChildren(ctx); }
+	@Override public T visitMultipleComparisons(@NotNull gramParser.MultipleComparisonsContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitProgram(@NotNull gramParser.ProgramContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTrivialExpression(@NotNull gramParser.TrivialExpressionContext ctx) { return visitChildren(ctx); }
 }

@@ -4,26 +4,23 @@ program
 	:function+
 	;
 function
-    : 'circuit' type('[]')* functionInit '{' statements '}'
+    : 'circuit' type Name '(' initParameters? ')' '{' statements '}'
     ;
-functionInit
-	:Name '(' initParameters? ')'
-	;
 statements
 	:(statement ';')+
 	;
 statement
 	:declaration
 	|value
-	|loops
+	|loop
 	|conditionals
 	|expression
 	;
 value
-	:Name ('[' Integer ']')*  '=' (expression | ('[' expression ']')+)
+	:Name  '=' expression
 	;
 declaration
-	:parameter ('[' Integer ']')*  ('=' (expression | ('[' expression ']')+))?
+	:parameter '=' expression 
 	;
 initParameters
 	:parameter (',' parameter)*
@@ -64,19 +61,10 @@ expression5
     :   Name    # NameR
     |   Number   # NumberR
     |   String   # StringR
+    | '(' expression ')' # BraketExpression
     ;
-loops
-	: forLoop
-	| whileLoop
-	;
-forLoop
-	:'for' '(' forConditions ')' '{' statements '}'
-	;
-whileLoop
+loop
 	:'while' '(' expression ')' '{' statements '}'
-	;
-forConditions
-	: ((value | declaration) (','(value | declaration))*)? ';' expression ';' (statement (',' statement)*)?
 	;
 conditionals
 	:'if' '(' expression ')' '{' statements '}' ('elseif' '(' expression ')' '{' statements '}')* ('else' '{' statements '}')?

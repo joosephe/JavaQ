@@ -1,4 +1,4 @@
-// Generated from gram.g4 by ANTLR 4.2.2
+// Generated from gram.g4 by ANTLR 4.2
 package gram;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -12,53 +12,53 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link gramParser#TriviaalneAvaldis3}.
+	 * Visit a parse tree produced by {@link gramParser#conditionals}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTriviaalneAvaldis3(@NotNull gramParser.TriviaalneAvaldis3Context ctx);
+	T visitConditionals(@NotNull gramParser.ConditionalsContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#forConditions}.
+	 * Visit a parse tree produced by {@link gramParser#NameR}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitForConditions(@NotNull gramParser.ForConditionsContext ctx);
+	T visitNameR(@NotNull gramParser.NameRContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#statements}.
+	 * Visit a parse tree produced by {@link gramParser#IntegerType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatements(@NotNull gramParser.StatementsContext ctx);
+	T visitIntegerType(@NotNull gramParser.IntegerTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#TriviaalneAvaldis2}.
+	 * Visit a parse tree produced by {@link gramParser#AddingSubstraction}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTriviaalneAvaldis2(@NotNull gramParser.TriviaalneAvaldis2Context ctx);
+	T visitAddingSubstraction(@NotNull gramParser.AddingSubstractionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#program}.
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProgram(@NotNull gramParser.ProgramContext ctx);
+	T visitTrivialExpression0(@NotNull gramParser.TrivialExpression0Context ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#TriviaalneAvaldis1}.
+	 * Visit a parse tree produced by {@link gramParser#FloatType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTriviaalneAvaldis1(@NotNull gramParser.TriviaalneAvaldis1Context ctx);
+	T visitFloatType(@NotNull gramParser.FloatTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#type}.
+	 * Visit a parse tree produced by {@link gramParser#Comparison}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType(@NotNull gramParser.TypeContext ctx);
+	T visitComparison(@NotNull gramParser.ComparisonContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#function}.
@@ -68,6 +68,41 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFunction(@NotNull gramParser.FunctionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrivialExpression4(@NotNull gramParser.TrivialExpression4Context ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrivialExpression3(@NotNull gramParser.TrivialExpression3Context ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#StringR}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringR(@NotNull gramParser.StringRContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#BoolType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolType(@NotNull gramParser.BoolTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrivialExpression2(@NotNull gramParser.TrivialExpression2Context ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link gramParser#parameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -75,88 +110,46 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitParameter(@NotNull gramParser.ParameterContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#statement}.
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression1}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatement(@NotNull gramParser.StatementContext ctx);
+	T visitTrivialExpression1(@NotNull gramParser.TrivialExpression1Context ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#paramInits}.
+	 * Visit a parse tree produced by {@link gramParser#GateType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParamInits(@NotNull gramParser.ParamInitsContext ctx);
+	T visitGateType(@NotNull gramParser.GateTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#paramValue}.
+	 * Visit a parse tree produced by {@link gramParser#TransformationType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParamValue(@NotNull gramParser.ParamValueContext ctx);
+	T visitTransformationType(@NotNull gramParser.TransformationTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#expression}.
+	 * Visit a parse tree produced by {@link gramParser#MeasurementType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(@NotNull gramParser.ExpressionContext ctx);
+	T visitMeasurementType(@NotNull gramParser.MeasurementTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#KorrutamineJagamine}.
+	 * Visit a parse tree produced by {@link gramParser#statements}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitKorrutamineJagamine(@NotNull gramParser.KorrutamineJagamineContext ctx);
+	T visitStatements(@NotNull gramParser.StatementsContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#loops}.
+	 * Visit a parse tree produced by {@link gramParser#loop}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLoops(@NotNull gramParser.LoopsContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#expression5}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression5(@NotNull gramParser.Expression5Context ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#functionInit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionInit(@NotNull gramParser.FunctionInitContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#expression0}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression0(@NotNull gramParser.Expression0Context ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#expression1}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression1(@NotNull gramParser.Expression1Context ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#UnaarneMiinus}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaarneMiinus(@NotNull gramParser.UnaarneMiinusContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link gramParser#paramValues}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParamValues(@NotNull gramParser.ParamValuesContext ctx);
+	T visitLoop(@NotNull gramParser.LoopContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link gramParser#initParameters}.
@@ -166,44 +159,121 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitInitParameters(@NotNull gramParser.InitParametersContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#functionCallParameter}.
+	 * Visit a parse tree produced by {@link gramParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionCallParameter(@NotNull gramParser.FunctionCallParameterContext ctx);
+	T visitValue(@NotNull gramParser.ValueContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#functionCall}.
+	 * Visit a parse tree produced by {@link gramParser#StateType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStateType(@NotNull gramParser.StateTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#NumberR}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberR(@NotNull gramParser.NumberRContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#QubitType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQubitType(@NotNull gramParser.QubitTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#UnaryNegation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryNegation(@NotNull gramParser.UnaryNegationContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#EnsembleType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnsembleType(@NotNull gramParser.EnsembleTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#ComplexType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComplexType(@NotNull gramParser.ComplexTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaration(@NotNull gramParser.DeclarationContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#CharType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharType(@NotNull gramParser.CharTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#StringType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringType(@NotNull gramParser.StringTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#FunctionCall}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFunctionCall(@NotNull gramParser.FunctionCallContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#conditionals}.
+	 * Visit a parse tree produced by {@link gramParser#MultiplicationDivision}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConditionals(@NotNull gramParser.ConditionalsContext ctx);
+	T visitMultiplicationDivision(@NotNull gramParser.MultiplicationDivisionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#conditions}.
+	 * Visit a parse tree produced by {@link gramParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConditions(@NotNull gramParser.ConditionsContext ctx);
+	T visitStatement(@NotNull gramParser.StatementContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#parameters}.
+	 * Visit a parse tree produced by {@link gramParser#BraketExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParameters(@NotNull gramParser.ParametersContext ctx);
+	T visitBraketExpression(@NotNull gramParser.BraketExpressionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link gramParser#FunktsiooniValjakutse}.
+	 * Visit a parse tree produced by {@link gramParser#MultipleComparisons}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunktsiooniValjakutse(@NotNull gramParser.FunktsiooniValjakutseContext ctx);
+	T visitMultipleComparisons(@NotNull gramParser.MultipleComparisonsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#program}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProgram(@NotNull gramParser.ProgramContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link gramParser#TrivialExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTrivialExpression(@NotNull gramParser.TrivialExpressionContext ctx);
 }
