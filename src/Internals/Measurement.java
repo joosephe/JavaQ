@@ -1,8 +1,11 @@
 package Internals;
 
+import java.util.Random;
+
 public class Measurement{
 	//measurement can be defined as a set of projections.
 	public ComplexMatrix[] proj;
+	
 	
 	public boolean isMeasurement(ComplexMatrix[] mats){
 		int n = mats.length;
@@ -74,15 +77,103 @@ public class Measurement{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public static QuantumState apply(QuantumState qu, Measurement me){
-		//TODO: write apply method
-		return qu;
+	public static Ensemble apply(Ensemble en, Measurement me){
+		Ensemble en2= new Ensemble(me.proj.length);
+		//TODO: get randomness
+		Random rand = new Random();
+		float random=rand.nextFloat();
+		for(int j=0;j<me.proj.length;j++){
+			//
+			en2.probs[j]=0;
+
+			for(int i=0;i<en.size;i++){
+				en2.probs[j]+=en.probs[j]*measureProb(me.proj[j],en.states[i]);
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		return en2;
 	}
 	
-	public static Qubit apply(Qubit qu, Measurement me){
+	//a helper function. doesn't really signify anything.
+	//computes the square of the norm of a matrix*vector
+	public static float measureProb(ComplexMatrix me, QuantumState st){
+		
+		ComplexMatrix vec = new ComplexMatrix(st.stateVector.length,1);
+		for(int i = 0;i<st.stateVector.length;i++){
+			vec.elems[i][0]=st.stateVector[i];
+		}
+		ComplexMatrix result = ComplexMatrix.multiply(me, vec);
+		//we must now make a column vector out of this.
+		
+		Complex [] col= new Complex[st.stateVector.length];
+		for(int i=0;i<st.stateVector.length;i++){
+			col[i]=result.elems[i][0];
+		}
+		
+		return Complex.norm(col)*Complex.norm(col);
+		
+	}
+	
+	public static int apply(QuantumState qu, Measurement me){
+		//first cast quantumstate into a  matrix
+		Random rand = new Random();
+		float random=rand.nextFloat();
+		int cases = me.proj.length;
+		float[] measProbs= new float[cases];
+		//float[] measProbsSum= new float[cases];
+		
+		for(int i=0;i<cases;i++){
+			measProbs[i]=measureProb(me.proj[i],qu);
+		}
+		float growerSum=0;
+		int i=0;
+		//Now compute
+		while(growerSum<random){
+			growerSum+=measProbs[i];
+			i++;
+		}
+
+		
+		
+		
+		
+		//returns the index of the element that got randomly chosen.
+		
 		//TODO: write apply method
-		return qu;
+		return i-1;
+	}
+	
+	public static boolean apply(Qubit qb, Measurement me){
+		//aaa! fuck! fuck! 
+		//how the fuck should we make this?
+		Random rand = new Random();
+		float random=rand.nextFloat();
+		
+		float zeroSize=Complex.ModulusSquare(qb.noPart);
+		
+		if(random<zeroSize){
+			return false;
+		}
+		else{
+			return true;
+		}
+		//ComplexMatrix vec = new ComplexMatrix(2,1);
+		//vec.elems[0][0]=qb.noPart;
+		//vec.elems[1][0]=qb.yesPart;
+		
+		
+		//the number of elements should match the number of measurements
+		//for()
+		
+		
+		//TODO: write apply method
+		//return qb;
 	}
 
 	//public Complex [][] elems;

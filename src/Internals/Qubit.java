@@ -49,6 +49,15 @@ public class Qubit {
 		}
 		
 	
+		public static void printQub(Qubit a){
+			Complex.printCom(a.noPart);
+			
+			Complex.printCom(a.yesPart);
+
+
+			
+		}
+		
 	
 	
 

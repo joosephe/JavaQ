@@ -145,9 +145,10 @@ public class random {
 		
 		//Qubit qu = new Qubit(oneVec);
 		Qubit qu2 = new Qubit(twoVec);
+		//Qubit.printQub(qu2);
+		Ensemble en =new Ensemble(qu2);
+		Ensemble.printEnsemble(en);
 
-		
-		
 	}
 	
 	
@@ -159,15 +160,18 @@ public class random {
 		// TODO Auto-generated method stub
 		initialArgs = args;
 		String asd = "circuit bool tere(int a) { tere() ;int a;tere();}";
+		
+		QubitTests();
+		/*
 		ParseTree tree = createParseTree(asd);
 		Visitor foo = new Visitor(tree);
 		try {
-			foo.runProgram();
+			//foo.runProgram();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(foo.getResult());
+		//System.out.println(foo.getResult());*/
 	}
 
 	private static ParseTree createParseTree(String program) {
