@@ -4,52 +4,36 @@ program
 	:function+
 	;
 function
-    : 'circuit' type functionInit '{' statements '}'
+    : 'circuit' type('[]')* functionInit '{' statements '}'
     ;
 functionInit
 	:Name '(' initParameters? ')'
-	;
-functionCall
-	:Name '(' parameters?  ')'
 	;
 statements
 	:(statement ';')+
 	;
 statement
-	:functionCall
-	|parameter
-	|paramInits '=' paramValues
+	:parameter ('[' Integer ']')*
+	|value
 	|loops
 	|conditionals
 	|expression
 	;
-paramInits
-	:parameter
-	|functionCall
-	|Name
+value
+	:paramInits ('[' Integer ']')*  '=' (expression | ('[' expression ']')+)
 	;
-paramValues
-	:functionCall
-	|paramValue
+paramInits
+	:parameter 
 	|Name
 	;
 initParameters
 	:parameter (',' parameter)*
 	;
-parameters
-	:functionCallParameter (',' functionCallParameter)*
-	;
 parameter
 	:type Name
 	;
-functionCallParameter
-	:functionCall
-	|paramInits '=' paramValues
-	|Name
-	|paramValue
-	;
 expression
-	:expression0
+	:expression0 ( ( '|' | ' &') expression0)*
 	;
 expression0
     :   expression1 ('>'|'<'|'>='|'<='|'=='|'!=') expression1     
@@ -83,21 +67,13 @@ expression5
     ;
 loops
 	:'for' '(' forConditions ')' '{' statements '}'
-	|'while' '(' conditions ')' '{' statements '}'
+	|'while' '(' expression ')' '{' statements '}'
 	;
 forConditions
-	:
-	|
+	: (value (','value)*)? ';' expression ';' (statement (',' statement)*)?
 	;
 conditionals
-	:'if' '(' conditions ')' '{' statements '}'
-	;
-conditions
-	:
-	;
-paramValue
-	: String
-	| Number
+	:'if' '(' expression ')' '{' statements '}'
 	;
 type
 	:'int'
@@ -113,14 +89,19 @@ type
 	|'state'
 	|'ensemble'
 	;
+Integer
+	:([1-9][0-9]*)|[0]
+	;
 Name
-	:[a-zA-Z][a-zA-Z0-9]*
+	:[a-zA-Z][a-zA-Z0-9_]*
 	;
 String
 	: '"' ~["\n\r] '"'
 	;
 Number
-	:[0-9]+
-	|[0-9]+ '.' [0-9]+
+	:[1-9] [0-9]*
+	|[1-9] [0-9]* '.' [0-9]+
+	|[0]
+	|[0] '.' [0-9]+
 	;
 WS  : [ \t\n] -> skip;
