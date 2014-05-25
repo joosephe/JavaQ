@@ -1,3 +1,4 @@
+package Internals;
 
 public class Complex {
 	
@@ -22,6 +23,10 @@ public class Complex {
 	public Complex(double d, double e) {
 		this.re =(float)d;
 		this.im=(float)e;
+		// TODO Auto-generated constructor stub
+	}
+
+	public Complex(String value) {
 		// TODO Auto-generated constructor stub
 	}
 

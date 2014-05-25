@@ -1,3 +1,4 @@
+package Internals;
 
 public class QuantumState {
 	

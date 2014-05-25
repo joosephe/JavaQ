@@ -1,7 +1,11 @@
+package Internals;
+
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import Parser.Visitor;
 import gram.gramLexer;
 import gram.gramParser;
 
@@ -147,24 +151,31 @@ public class random {
 	}
 	
 	
-	
-	
+	public static String[] initialArgs;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String asd = "circuit bool tere() { tere() ;int a;tere();}";
-		//createParseTree(asd); 
-		//testComplexMatrix();
-		//QubitTests();
+		initialArgs = args;
+		String asd = "circuit bool tere(int a) { tere() ;int a;tere();}";
+		ParseTree tree = createParseTree(asd);
+		Visitor foo = new Visitor(tree);
+		try {
+			foo.runProgram();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(foo.getResult());
 	}
+
 	private static ParseTree createParseTree(String program) {
 	    ANTLRInputStream antlrInput = new ANTLRInputStream(program);
 	    gramLexer lexer = new gramLexer(antlrInput);
 	    CommonTokenStream tokens = new CommonTokenStream(lexer);
 	    gramParser parser = new gramParser(tokens);
-	    ParseTree tree = parser.program();
+	    ParseTree tree = parser.program();	    
 	    System.out.println(tree.toStringTree(parser));
 	    return tree;
 	}
