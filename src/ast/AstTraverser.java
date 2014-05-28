@@ -1120,7 +1120,7 @@ public class AstTraverser {
 			int cols = (int) params.get(1);
 
 			if(params.size()!=rows*cols+2){
-				throw new Exception("Size of matrix doesn't match");
+				throw new Exception("Size of matrix  doesn't match");
 			}
 			else{
 				//for(Object param:params){
