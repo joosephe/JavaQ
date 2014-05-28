@@ -782,6 +782,21 @@ public class AstTraverser {
 		//add column to complexmatrix
 		
 		switch(builtIn.getName()){
+		case "complex":{
+			if(params.size()!=2){
+				throw new Exception("Complex needs exactly two floating-point numbers to be initialized");
+			}
+			else{
+				for(Object param:params){
+					if(!(param instanceof Float)){
+						throw new Exception("Complex needs   floating-point numbers to be initialized");
+					}
+					
+				}
+				return new  Complex(((float)params.get(0)), ((float) params.get(1)));
+			}
+			
+		}
 		case "qubit":{
 			if(params.size()!=2){
 				throw new Exception("Qubit needs exactly two complex numbers to be initialized");
