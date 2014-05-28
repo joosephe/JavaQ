@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.junit.experimental.theories.ParametersSuppliedBy;
 
+import Internals.BuiltIn;
 import Internals.Complex;
 import Internals.Ensemble;
 import Internals.Measurement;
@@ -39,6 +41,7 @@ public class AstTraverser {
 	
 	private Map<String, String> variables= new HashMap<>(); //Usage: type name
 	private static Map<String, Statement> functions = new HashMap<>();
+	private static Map<String, BuiltIn> builtIns = new HashMap<>();
 	private Map<String, Boolean> bools = new HashMap<String, Boolean>();
 	private Map<String, Integer> ints = new HashMap<String, Integer>();
 	private Map<String, Float> floats = new HashMap<String, Float>();
@@ -50,110 +53,10 @@ public class AstTraverser {
 	private Map<String, Measurement> measurements = new HashMap<String, Measurement>();
 	private Map<String, Ensemble> ensembles = new HashMap<String, Ensemble>();
 	private QuantumState state;
+	private Object returnObject;
+
 	
-	
-	
-	//private static void generateCode(AstNode node,MethodVisitor mv) {
-	private void generateCode(AstNode node) {
-        if (node instanceof ElseIfStatement) {
-        	//TODO: 
-        	//kuidas ma saan expressionist kätte tema tõeväärtuse?
-        	Expression cond = ((ElseIfStatement) node).getCondition();
-        	
-        }
-        else if (node instanceof Program){
-            List<Statement> functs = ((Program) node).getFunctions();
-            for(Statement function : functs){
-                functions.put(((Function) function).getName(),function);
-            }
-            generateCode(functions.get("main"));
-        }
-        else if (node instanceof Function) {
-        	generateCode(((Function) node).getStatements());
-
-        }
-        else if (node instanceof Block){
-        	List<Object> list = node.getChildren();
-        	for(Object item : list){
-        		((ElseIfStatement) item).getCondition();
-        	}
-        	
-        }
-        else if (node instanceof IfStatement) {
-        	//TODO: 
-        	//kuidas ma saan expressionist kätte tema tõeväärtuse?
-        	Expression cond = ((ElseIfStatement) node).getCondition();
-        	
-
-        }
-        else if ( node instanceof WhileStatement){
-        	
-        }
-        else if (node instanceof Expression) {
-        	//TODO: 
-
-        }
-        else if (node instanceof Parameter) {
-        	//TODO: 
-
-        }
-        else if (node instanceof Parameters) {
-        	//TODO: 
-        }
-        else if (node instanceof Type) {
-        	//TODO: 
-
-        }
-        else if (node instanceof VariableDeclaration) {
-        	//kas  ma saan nii kätte tüübi nime?
-        	Expression param =  ( (VariableDeclaration) node).getParameter();
-        	Expression type = ((Parameter) param).getType();
-        	String name = ((Type) param).getName();
-        	Expression init =  ( (VariableDeclaration) node).getInitializer();
-        	switch (name){
-        	case "int": 
-        		// is name in ints?
-        		if(ints.containsKey(name)){
-        			//TODO: throw exception
-        		}
-        		else{
-        			//TODO: initialize.
-        			
-        		}
-        		//
-        		
-        		
-        	case "float":
-        	
-        	
-        	case "boolean":
-        		
-        	case "complex":
-        		
-        	
-        	
-        	
-        	
-        	}
-
-        }
-        else if ( node instanceof Assignment){
-        	
-        }
-        else if ( node instanceof FunctionCall){
-        	
-        }
-        else if ( node instanceof Variable){
-        	
-        }
-        else if ( node instanceof ExpressionStatement){
-        	
-        }
-        
-        
-    }
-	
-	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value){
+	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value) throws Exception{
 		if(parameters != null) {
 			for(int i = 0; i<parameters.size();i++){ 
 				Type type = (Type) ((Parameter) parameters.get(i)).getType();
@@ -164,11 +67,451 @@ public class AstTraverser {
 		generateCode(tree);	
 	}
 
+
 	public static void main(String[] args) {
-		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { int a = 9;tere();a=3;}circuit int tere(){int x = 0;}");
+		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { a = 9;((tere()));a=3;}circuit int tere(){int x = 0;}");
 		System.out.println(tree.toString());
-		AstTraverser interpretator = new AstTraverser(tree, null, null);
+		//AstTraverser interpretator = new AstTraverser(tree, null, null);
 	}
+	
+	
+	//private static void generateCode(AstNode node,MethodVisitor mv) {
+	private void generateCode(AstNode node) throws Exception {
+        if (node instanceof Program){
+            List<Statement> functions = ((Program) node).getFunctions();
+            for(Statement function : functions){
+                AstTraverser.functions.put(((Function) function).getName(),function);
+            }
+            generateCode(AstTraverser.functions.get("main"));
+        }
+        else if (node instanceof Function) {
+        	generateCode(((Function) node).getStatements());
+
+        }
+        else if (node instanceof Block){
+        	List<Object> list = node.getChildren();
+        	for(Object item : list){
+                generateCode((AstNode)item);
+        	}
+        	
+        }
+        else if (node instanceof IfStatement) {
+            Expression cond = ((IfStatement) node).getCondition();
+            if(checkCondition(cond)){
+                Statement statements = ((IfStatement) node).getThenBranch();
+                generateCode(statements);
+            }
+            else if(((IfStatement) node).getElseIfs()!=null){
+                List<Statement> elseIfs = ((IfStatement) node).getElseIfs();
+                for(Statement elseIf :elseIfs){
+                    if(checkCondition(((ElseIfStatement) elseIf).getCondition())){
+                        Statement statements = ((ElseIfStatement) elseIf).getThenBranch();
+                        generateCode(statements);
+                    }
+                }
+            }
+            else{
+                Statement statements = ((IfStatement) node).getElseBranch();
+                generateCode(statements);
+            }
+        }
+        else if ( node instanceof WhileStatement){
+            Expression conditions = ((WhileStatement) node).getCondition();
+            Statement statements = ((WhileStatement) node).getBody();
+            while(checkCondition(conditions)){
+                generateCode(statements);
+            }
+        }
+        else if (node instanceof VariableDeclaration) {
+        	//kas  ma saan nii kätte tüübi nime?
+            Expression param =  ( (VariableDeclaration) node).getParameter();
+            String type = ((Type) ((Parameter) param).getType()).getName();
+            String name = ((Parameter) param).getVariable();
+        	Expression init =  ( (VariableDeclaration) node).getInitializer();
+        	declareVariable(type,name,init);
+        }
+        else if ( node instanceof Assignment){
+        	String name = ((Assignment) node).getVariableName();
+        	Expression value = ((Assignment) node).getExpression();
+        	declareVariable(null,name,value);
+        }
+        else if ( node instanceof ExpressionStatement){
+        	
+        }
+        
+        
+    }
+
+    private void declareVariable(String t, String name, Expression init) throws Exception{
+    	String type=t;
+    		if(type==null){
+    			if(variables.containsKey(name)){
+    				type=variables.get(name);
+    		        switch (type){
+    		        case "int":
+    		                if(checkType(init)=="int"){
+    		                	variables.put(name, type);
+    		                    ints.put(name, (Integer)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    		            break;
+    		        case "float":
+    		                if(checkType(init)=="float"){
+    		                    floats.put(name, (Float)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    		            break;
+    		        case "bool": {
+    		                if(checkType(init)=="bool"){
+    		                	variables.put(name, type);
+    		                    bools.put(name, (Boolean)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    		        	break;
+    				}
+    				case "complex": {
+    		                if(checkType(init)=="complex"){
+    		                	variables.put(name, type);
+    		                    complexes.put(name, (Complex)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				case "qubit": {
+    		                if(checkType(init)=="qubit"){
+    		                	variables.put(name, type);
+    		                    qubits.put(name, (Qubit)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				case "transformation": {
+    		                if(checkType(init)=="transformation"){
+    		                	variables.put(name, type);
+    		                    transformations.put(name, (Transformation)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				case "string": {
+    		                if(checkType(init)=="string"){
+    		                	variables.put(name, type);
+    		                    strings.put(name, (String)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				case "char": {
+    		                if(checkType(init)=="char"){
+    		                	variables.put(name, type);
+    		                    chars.put(name, (Character)getValue(init));
+    		                }
+    		                else{
+    		                    throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				case "measurement": {
+    		                if(checkType(init)=="measurement"){
+    		                	variables.put(name, type);
+    		                    measurements.put(name, (Measurement)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    				/*case "state": { // XXX - Is this needed?
+    					state = (State) value;
+    					break;
+    				}*/
+    				case "ensemble": {
+    		                if(checkType(init)=="ensemble"){
+    		                	variables.put(name, type);
+    		                    ensembles.put(name, (Ensemble)getValue(init));
+    		                }
+    		                else{
+    		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+    		                }
+    					break;
+    				}
+    		        }
+    			}
+    			else{
+    				throw new Exception("Variable "+name+" undefined!");
+    			}
+    		}
+    		else{
+		        switch (type){
+		        case "int":
+		            if(variables.containsKey(name)){
+		            	throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="int"){
+		                	variables.put(name, type);
+		                    ints.put(name, (Integer)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+		            break;
+		        case "float":
+		            if(variables.containsKey("float")){
+		            	throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="float"){
+		                    floats.put(name, (Float)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+		            break;
+		        case "bool": {
+		        	if(variables.containsKey(name)){
+		        		throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="bool"){
+		                	variables.put(name, type);
+		                    bools.put(name, (Boolean)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+		        	break;
+				}
+				case "complex": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="complex"){
+		                	variables.put(name, type);
+		                    complexes.put(name, (Complex)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				case "qubit": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="qubit"){
+		                	variables.put(name, type);
+		                    qubits.put(name, (Qubit)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				case "transformation": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="transformation"){
+		                	variables.put(name, type);
+		                    transformations.put(name, (Transformation)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				case "string": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="string"){
+		                	variables.put(name, type);
+		                    strings.put(name, (String)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				case "char": {
+					if(variables.containsKey(name)){
+		                throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="char"){
+		                	variables.put(name, type);
+		                    chars.put(name, (Character)getValue(init));
+		                }
+		                else{
+		                    throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				case "measurement": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="measurement"){
+		                	variables.put(name, type);
+		                    measurements.put(name, (Measurement)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				/*case "state": { // XXX - Is this needed?
+					state = (State) value;
+					break;
+				}*/
+				case "ensemble": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+		            }
+		            else{
+		                if(checkType(init)=="ensemble"){
+		                	variables.put(name, type);
+		                    ensembles.put(name, (Ensemble)getValue(init));
+		                }
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+		            }
+					break;
+				}
+				default: {
+					throw new Exception("Invalid type:" + type +"!");
+				}
+		        }
+    		}
+    }
+    
+    private String checkType(Expression expression) throws Exception{
+    	if(expression instanceof FunctionCall){
+    		String name = ((FunctionCall) expression).getFunctionName();
+    		if(name.equals("&") || name.equals("|") ){
+    			String left = checkType(((FunctionCall) expression).getArguments().get(0));
+    			String right = checkType(((FunctionCall) expression).getArguments().get(1));
+    			if(left.equals("bool") && right.equals("bool")){
+    				return "bool";
+    			}
+    			else{
+    				throw new Exception("Cannot compare something without truth value!");
+    			}
+    		}
+    		else if( name.equals("+") || name.equals("*")  || name.equals("/")){
+    			String left = checkType(((FunctionCall) expression).getArguments().get(0));
+    			String right = checkType(((FunctionCall) expression).getArguments().get(1));
+    			if(left.equals(right) && !left.equals("bool")){
+    				return name;
+    			}
+    			else{
+    				throw new Exception("Cannot "+left+" "+name+" "+right);
+    			}
+    		}
+    		else if (name.equals("-") ){
+    			if(((FunctionCall) expression).getArguments().size()==1){
+    				String type = checkType(((FunctionCall) expression).getArguments().get(0));
+    				if(type.equals("int") || type.equals("float")){
+    					return type;
+    				}
+    				else{
+    					throw new Exception("Cannot implicate "+name+" to type " + type+ "!");
+    				}
+    			}
+    			else{
+    				String left = checkType(((FunctionCall) expression).getArguments().get(0));
+        			String right = checkType(((FunctionCall) expression).getArguments().get(1));
+        			if(left.equals(right) && !left.equals("bool")){
+        				return name;
+        			}
+        			else{
+        				throw new Exception("Cannot "+left+" "+name+" "+right);
+        			}
+    			}
+    		}
+    		else{
+    			if(AstTraverser.functions.containsKey(name)){
+    				return ((Type) ((Function) AstTraverser.functions.get(name)).getType()).getName();
+    			}
+    			else if(AstTraverser.builtIns.containsKey(name)){
+    				return AstTraverser.builtIns.get(name).getType();
+    			}
+    			else{
+    				throw new Exception("No function "+name+"(..).");
+    			}
+    		}
+    	}
+    	else if (expression instanceof FloatingPointLiteral){
+    		return "float";
+    	}
+    	else if (expression instanceof IntegerLiteral){
+    		return "int";
+    	}
+    	else if (expression instanceof StringLiteral){
+    		if(((StringLiteral) expression).getValue().length()==1)
+    			return "char";
+    		else
+    			return "string";
+    	}
+    	else if ( expression instanceof Variable){
+    		String name=((Variable) expression).getName();
+    		if(variables.containsKey(name)){
+    			return variables.get(name);
+    		}
+    		else{
+    			throw new Exception("No variable "+name+" declared yet!");
+    		}
+    	}
+    	else{
+    		throw new Exception("Something went wrong at checking types!");
+    	}
+    }
+    
+    public static Object getValue(Expression expression){
+    	
+    	return "";
+    }
+    
+    public boolean checkCondition(Expression condition)throws Exception{
+    	if(checkType(condition).equals("bool")){
+    		return true;
+    	}
+    	else if(getValue(condition)!=null){
+    		return true;
+    	}
+    	else
+    		return false;
+    }
 
 	public void addToMemory(Type type, String name, Object value) {
 		try {
