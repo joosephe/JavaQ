@@ -8,12 +8,12 @@ import ee.ut.cs.akt.aktk.ast.Statement;
 
 
 public class Function extends Statement {
-	private final String type;
+	private final Expression type;
 	private final String name;
 	private final Expression parameters;
 	private final Statement statements;
 
-	public Function(String type, String name, Expression parameters, Statement statements) {
+	public Function(Expression type, String name, Expression parameters, Statement statements) {
 		this.type = type;
 		this.name = name;
 		this.parameters = parameters;
@@ -25,7 +25,7 @@ public class Function extends Statement {
 		return Arrays.asList((Object)type, name, parameters, statements);
 	}
 	
-	public String getType(){
+	public Expression getType(){
 		return type;
 	}
 	
