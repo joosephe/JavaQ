@@ -80,6 +80,9 @@ public class AstTraverser {
 		//AstTraverser interpretator = new AstTraverser(tree, null, null);
 	}
 	
+	private Object getReturn(){
+		return returnObject;
+	}
 	
 	//private static void generateCode(AstNode node,MethodVisitor mv) {
 	private void generateCode(AstNode node) throws Exception {
@@ -142,7 +145,7 @@ public class AstTraverser {
         	declareVariable(null,name,value);
         }
         else if ( node instanceof ExpressionStatement){
-        	
+        	getValue((Expression)node);
         }
         
         
@@ -437,6 +440,8 @@ public class AstTraverser {
     		else if( name.equals("+") || name.equals("*")  || name.equals("/")){
     			String left = checkType(((FunctionCall) expression).getArguments().get(0));
     			String right = checkType(((FunctionCall) expression).getArguments().get(1));
+    			if((left.equals("string")||left.equals("char")) && (right.equals("string") || right.equals("char")))
+    				return "string";
     			if(left.equals(right) && !left.equals("bool")){
     				return name;
     			}
@@ -506,9 +511,184 @@ public class AstTraverser {
     	}
     }
     
-    public static Object getValue(Expression expression){
-    	
-    	return "";
+    private Object getValue(Expression expression) throws Exception{
+    	if(expression instanceof FunctionCall){
+    		String name = ((FunctionCall) expression).getFunctionName();
+    		switch(name){
+    		case "&":{
+    			boolean left = (boolean) getValue(((FunctionCall) expression).getArguments().get(0));
+    			boolean right = (boolean) getValue(((FunctionCall) expression).getArguments().get(1));
+    			return left && right;
+    		}
+    		case "|":{
+    			boolean left = (boolean) getValue(((FunctionCall) expression).getArguments().get(0));
+    			boolean right = (boolean) getValue(((FunctionCall) expression).getArguments().get(1));
+    			return left || right;
+    		}
+    		case "+":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left + (Integer)right;
+    			}
+    			else if(left instanceof Float){
+    				return (Float)left + (Float)right;
+    			}
+    			else if(left instanceof Complex){
+    				return Complex.Add((Complex)left,(Complex)right);
+    			}
+    			else if(left instanceof Character || left instanceof String){
+    				return (String)left + (String)right;
+    			}
+    			else
+    				throw new Exception("Cannot add "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "*":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left * (Integer)right;
+    			}
+    			else if(left instanceof Float){
+    				return (Float)left * (Float)right;
+    			}
+    			else if(left instanceof Complex){
+    				return Complex.Multiply((Complex)left,(Complex)right);
+    			}
+    			else
+    				throw new Exception("Cannot multiply "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "/":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left / (Integer)right;
+    			}
+    			else if(left instanceof Float){
+    				return (Float)left / (Float)right;
+    			}
+    			else
+    				throw new Exception("Cannot divide "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "-":{
+    			if(((FunctionCall) expression).getArguments().size()==1){
+    				Object object = getValue(((FunctionCall) expression).getArguments().get(0));
+    				if(object instanceof Integer){
+    					return -(Integer)object;
+    				}
+    				else if(object instanceof Float){
+    					return -(Float)object;
+    				}
+    				else if(object instanceof Complex){
+    					return Complex.Subtract(new Complex(0,0), (Complex)object);
+    				}
+    				else throw new Exception("Type " +object.getClass() +" cannot be negative!");
+    			}
+    			else{
+    				Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+        			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+        			if(left instanceof Integer){
+        				return (Integer)left-(Integer)right;
+        			}
+        			else if(left instanceof Float){
+        				return (Float)left-(Float)right;
+        			}
+        			else if(left instanceof Complex){
+        				return Complex.Subtract((Complex)left, (Complex)right);
+        			}
+        			else throw new Exception("Cannot subtract "+left+" and "+right);
+    			}
+    		}
+    		default:{
+    			if(AstTraverser.functions.containsKey(name)){
+    				return goToFunction(name, expression);
+    			}
+    			else if(AstTraverser.builtIns.containsKey(name)){
+    				List<Object> params = new ArrayList<>();
+    				List<Expression> args = ((FunctionCall) expression).getArguments();
+    				for(Expression arg: args){
+    					params.add(getValue(arg));
+    				}
+    				return doBuiltIn(AstTraverser.builtIns.get(name), params);
+    			}
+    			else throw new Exception("No function named "+name+"!");
+    		}
+    		}
+    	}
+    	else if (expression instanceof BooleanLiteral){
+    		return ((BooleanLiteral) expression).getValue();
+    	}
+    	else if (expression instanceof FloatingPointLiteral){
+    		return ((FloatingPointLiteral) expression).getValue();
+    	}
+    	else if (expression instanceof IntegerLiteral){
+    		return ((IntegerLiteral) expression).getValue();
+    	}
+    	else if (expression instanceof StringLiteral){
+    		return ((StringLiteral) expression).getValue();
+    	}
+    	else if ( expression instanceof Variable){
+    		String name=((Variable) expression).getName();
+    		if(variables.containsKey(name)){
+    			return getVariableValue(expression);
+    		}
+    		else{
+    			throw new Exception("No variable "+name+" declared yet!");
+    		}
+    	}
+    	else{
+    		throw new Exception("Something went wrong at getting values!");
+    	}
+    }
+    
+    private Object goToFunction(String name, Expression expression) throws Exception{
+    	List<Expression> params= new ArrayList<>();
+    	List<Object> values = new ArrayList<>();
+    	AstTraverser astTraverser= new AstTraverser(AstTraverser.functions.get(name),params,values);
+    	return astTraverser.getReturn();
+    }
+    private Object getVariableValue(Expression expression) throws Exception{
+    	String name = ((Variable) expression).getName();
+    	String type = variables.get(name);
+    	switch(type) {
+		case "int": {
+			return ints.get(name);
+		}
+		case "float": {
+			return floats.get(name);
+		}
+		case "bool": {
+			return bools.get(name);
+		}
+		case "complex": {
+			return complexes.get(name);
+		}
+		case "qubit": {
+			return qubits.get(name);
+		}
+		case "transformation": {
+			return transformations.get(name);
+		}
+		case "string": {
+			return strings.get(name);
+		}
+		case "char": {
+			return chars.get(name);
+		}
+		case "measurement": {
+			return measurements.get(name);
+		}
+		/*case "state": { // XXX - Is this needed?
+			state = (State) value;
+			break;
+		}*/
+		case "ensemble": {
+			return ensembles.get(name);
+		}
+		default: {
+			throw new Exception("No such type as "+type);
+		}
+	}
     }
     
     public boolean checkCondition(Expression condition)throws Exception{
