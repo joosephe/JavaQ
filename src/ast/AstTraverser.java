@@ -11,6 +11,7 @@ import org.junit.experimental.theories.ParametersSuppliedBy;
 
 import Internals.BuiltIn;
 import Internals.Complex;
+import Internals.ComplexMatrix;
 import Internals.Ensemble;
 import Internals.Measurement;
 import Internals.QuantumState;
@@ -52,6 +53,11 @@ public class AstTraverser {
 	private Map<String, Transformation> transformations = new HashMap<String, Transformation>();
 	private Map<String, Measurement> measurements = new HashMap<String, Measurement>();
 	private Map<String, Ensemble> ensembles = new HashMap<String, Ensemble>();
+	//not sure whether usable?
+	private Map<String, ComplexMatrix> cmatrices = new HashMap<String, ComplexMatrix>();
+
+	//private Map<String, Qubit> qubits = new HashMap<String, Qubit>();
+
 	private QuantumState state;
 	private Object returnObject;
 
@@ -571,12 +577,145 @@ public class AstTraverser {
 			System.out.println("Invalid variable type!");
 		}
 	}
-	private Object doBuiltIn(BuiltIn builtIn, List<Parameters> params){
+	private Object doBuiltIn(BuiltIn builtIn, List<Object> params) throws Exception{
+		
+		//We need
+		//qubit initialization from two complex numbers
+		//adding a qubit to state. Done! Untested.
+		//applying transformation to state. Done! Untested.
+		//applying transformation to qubit.Done! Untested.
+		//applying measurement to state. Done! Untested.
+		//initializing transformation from a matrix of complex numbers. Done! Untested
+		//initializing measurement from a set of matrices of complex numbers. the first element is the number of 
+		
+		//can live without these, but it won't be pretty
+		//making a complex matrix from a bunch of complex numbers?? can user use this? think about this later?
+		//qubits zero, one, plus, minus
+		//identity martix
+		//zero matrix
+		//Hadamard-gate
+		//flip-gate
+		//turn-gate (in which case )
+		//tensor product of transformations
+		//tensor product of measurements?
+		//add row to complexmatrix
+		//add column to complexmatrix
+		
 		switch(builtIn.getName()){
 		case "qubit":{
+			if(params.size()!=2){
+				throw new Exception("Qubit needs exactly two complex numbers to be initialized");
+			}
+			else{
+				for(Object param:params){
+					if(!(param instanceof Complex)){
+						throw new Exception("Qubit needs   complex numbers to be initialized");
+					}
+					
+				}
+				return new  Qubit(((Complex)params.get(0)), ((Complex) params.get(1)));
+			}
 			
 		}
+		case "applyToQubit":{
+			//the first element is the transformation, the second is the qubit
+			if(params.size()!=2){
+				throw new Exception("To transform qubit, we need exactly two inputs");
+			}
+			else{
+				if(!(params.get(0) instanceof Transformation)){
+					throw new Exception("To transform qubit, first input must be transformation");
+				}
+				if(!(params.get(1) instanceof Qubit)){
+					throw new Exception("To transform qubit, second input must be qubit");
+				}
+				else{
+					return Transformation.apply(((Qubit)params.get(0)), ((Transformation) params.get(1)));
+				}
+			}
+		}
+		case "applyToQuantumState":{
+			//the first element is the transformation. the state is THE state.
+			if(params.size()!=1){
+				throw new Exception("To transform quantum state, we need exactly one input");
+			}
+			else{
+				if(!(params.get(0) instanceof Transformation)){
+					throw new Exception("To transform quantum state., first input must be transformation");
+				}
+				else{
+					this.state= Transformation.apply(state, ((Transformation)params.get(0)));
+					return null;
+				}
+			}
+		}
+		case "measureState":{
+			//the first element is the measurement. the state is THE state.
+			//changes the state. 
+			if(params.size()!=1){
+				throw new Exception("To measure quantum state, we need exactly one input");
+			}
+			else{
+				if(!(params.get(0) instanceof Measurement)){
+					throw new Exception("To measure quantum state., first input must be measurement");
+				}
+				else{
+					this.state= Measurement.measure(state, ((Measurement)params.get(0)));
+					return null;
+				}
+			}
+		}
+		case "transformation":{
+			//the first element is the complex matrix.
+			if(params.size()!=1){
+				throw new Exception("To initialize transformation, we need exactly one input");
+			}
+			else{
+				if(!(params.get(0) instanceof ComplexMatrix)){
+					throw new Exception("To measure quantum state., first input must be measurement");
+				}
+				else{
+					
+					return new Transformation(   (ComplexMatrix) params.get(0)  );
+				}
+			}
+		}
+		case "measurement":{
+			//the elements are complex matrices
+			//changes the state. 
+			//TODO: this part.
+			if(params.size()!=1){
+				throw new Exception("To measure quantum state, we need exactly one input");
+			}
+			else{
+				if(!(params.get(0) instanceof ComplexMatrix)){
+					throw new Exception("To measure quantum state., first input must be measurement");
+				}
+				else{
+					
+					return new Transformation(   (ComplexMatrix) params.get(0)  );
+				}
+			}
+		}
+		
 		}
 		return "";
 	}
+	
+	public static boolean isSquare (int a ){
+		//returns true if a is a square number.
+		if(a<0){
+			return false;
+		}
+		else{
+			int sqr= (int)Math.sqrt(a);
+			if(sqr*sqr==a){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	
 }

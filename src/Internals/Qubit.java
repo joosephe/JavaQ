@@ -48,6 +48,37 @@ public class Qubit {
 			
 		}
 		
+		public Qubit(Complex a, Complex b){			
+			this.noPart =a;
+			this.yesPart=b;
+			Complex[] vec = new Complex[2];
+			vec[0]=a;
+			vec[1]=b;
+			float n = Complex.norm(vec);
+			double epsilon = 0.00001;
+			double diff;
+			if(n>=1.0){
+				diff=n-1.0;
+			}
+			else{
+				diff=1.0-n;
+			}
+			//this was bad since roundings are inexact. 
+			//if(n!=1.0){
+			//if((n-1.0)*(n-1.0)>epsilon){
+			if(diff>epsilon){				
+				try {
+					throw new Exception("To initialize qubit, the norm of the vector must be 1.") ;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+		}
+		
 	
 		public static void printQub(Qubit a){
 			Complex.printCom(a.noPart);

@@ -6,6 +6,13 @@ public class ComplexMatrix {
 	public int rowCount;
 	public int colCount;
 	
+	public ComplexMatrix(){
+		Complex[][] mats= new Complex[0][0];
+		this.rowCount=0;
+		this.colCount=0;
+		this.elems=mats;
+	}
+	
 	
 	//initializes a zero complex matrix with a given number of rows and columns
 	public ComplexMatrix(int rows, int cols){

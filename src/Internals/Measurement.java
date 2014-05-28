@@ -121,6 +121,8 @@ public class Measurement{
 	}
 	//TODO: test this
 	public static QuantumState stateAfterMeasurement(QuantumState st, ComplexMatrix me){
+		//measures state. doesn't tell us much about what we measured. but the state is changed .
+		//to something of a smaller dimension.
 		ComplexMatrix vec = new ComplexMatrix(st.stateVector.length,1);
 		//QuantumState resQu = new QuantumState(st.stateVector.length,1);
 
@@ -188,7 +190,9 @@ public class Measurement{
 		//it would be great if both the matrix could change and that 
 		qu= stateAfterMeasurement( qu,  me.proj[meas]);
 		
-		
+		//problem: logically, the state vector should be smaller after measurement. I suspect it is not.
+		//since we only did matrix multiplications and so on.
+		//what is going on?
 		return qu;
 	}
 	

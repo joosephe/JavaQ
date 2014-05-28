@@ -1,10 +1,55 @@
 package Internals;
 
 public class Transformation extends ComplexMatrix {
+//public class Transformation {
 
 	public Transformation(Complex[][] a) {
 		
 		super(a);
+		if (!isUnitary(this)){
+			try {
+				throw new Exception("Transformation matrix must be unitary");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		// TODO but now Transformation is still initialized. is this bad?
+	}
+	public Transformation(int n) {
+		//does unit transformation.
+		this.rowCount=n;
+		this.colCount=n;
+		Complex[][] mats= new Complex[n][n];
+		Complex one =new Complex(1,0);
+		Complex zero =new Complex(0,0);
+		for(int i=0;i<rowCount;i++){
+			for(int j=0;j<colCount;j++){
+				if(i!=j){
+					this.elems[i][j]=zero;
+				}
+				else{
+					this.elems[i][j]=one;
+				}
+			}
+		}
+	}
+	
+	public Transformation(ComplexMatrix a) {
+		this.rowCount=a.elems.length;
+		this.colCount=a.elems[0].length;
+			
+		Complex[][] mats= new Complex[rowCount][colCount];
+			//can I just copy a matrix?
+		this.elems=mats;
+			//can I just copy a matrix?
+		for(int i=0;i<rowCount;i++){
+			for(int j=0;j<colCount;j++){
+				this.elems[i][j]=a.elems[i][j];
+			}
+		}
+			
 		if (!isUnitary(this)){
 			try {
 				throw new Exception("Transformation matrix must be unitary");
