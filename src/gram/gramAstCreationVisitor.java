@@ -11,6 +11,7 @@ import ast.Function;
 import ast.IfStatement;
 import ast.Parameter;
 import ast.Parameters;
+import ast.Program;
 import ast.Type;
 import ast.VariableDeclaration;
 import ee.ut.cs.akt.aktk.ast.Assignment;
@@ -38,6 +39,7 @@ import gram.gramParser.MultiplicationDivisionContext;
 import gram.gramParser.NameRContext;
 import gram.gramParser.NumberRContext;
 import gram.gramParser.ParameterContext;
+import gram.gramParser.ProgramContext;
 import gram.gramParser.StatementContext;
 import gram.gramParser.StatementsContext;
 import gram.gramParser.StringRContext;
@@ -215,6 +217,12 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 	public AstNode visitType(TypeContext ctx) {
 		String name = ctx.getChild(0).getText();
 		return new Type(name);
+	}
+
+	@Override
+	public AstNode visitProgram(ProgramContext ctx) {
+		List<Statement> functions = new ArrayList<>();
+		return new Program(functions);
 	}
 
 }
