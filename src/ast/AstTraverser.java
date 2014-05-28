@@ -2,10 +2,17 @@ package ast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import Internals.Complex;
+import Internals.Measurement;
+import Internals.QuantumState;
+import Internals.Qubit;
+import Internals.Transformation;
 import ast.ElseIfStatement;
 import ast.Function;
 import ast.IfStatement;
@@ -49,7 +56,14 @@ public class AstTraverser {
 	
 	
 	
-	
+	private static Map<String, Boolean> bools = new HashMap<String, Boolean>();
+	private static Map<String, Integer> ints = new HashMap<String, Integer>();
+	private static Map<String, Float> floats = new HashMap<String, Float>();
+	private static Map<String, Complex> complexes = new HashMap<String, Complex>();
+	private static Map<String, Qubit> qubits = new HashMap<String, Qubit>();
+	private static Map<String, Transformation> transformations = new HashMap<String, Transformation>();
+	private static Map<String, Measurement> measurements = new HashMap<String, Measurement>();
+	private static QuantumState state;
 	
 	
 	
@@ -91,9 +105,18 @@ public class AstTraverser {
         	//kas  ma saan nii kätte tüübi nime?
         	Expression param =  ( (VariableDeclaration) node).getParameter();
         	String name = param.toString();
-        	//TODO: 
+        	Expression init =  ( (VariableDeclaration) node).getInitializer();
         	switch (name){
         	case "int": 
+        		// is name in ints?
+        		if(ints.containsKey(name)){
+        			//TODO: throw exception
+        		}
+        		else{
+        			//TODO: initialize.
+        			
+        		}
+        		//
         		
         		
         	case "float":
