@@ -277,6 +277,15 @@ public class AstTraverser {
     		                }
     					break;
     				}
+    				case "cmatrix": {
+    					if(checkType(init).equals("cmatrix")){
+    						variables.put(name, type);
+    						cmatrices.put(name, (ComplexMatrix)getValue(init));
+    					}
+		                else{
+		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
+		                }
+    				}
     		        }
     			}
     			else{
@@ -436,6 +445,18 @@ public class AstTraverser {
 		                }
 		            }
 					break;
+				}
+				case "cmatrix": {
+					if(variables.containsKey(name)){
+						throw new Exception("Variable "+name+" already declared!");
+					}
+					else{
+						if(checkType(init).equals("cmatrix")){
+							variables.put(name, type);
+							cmatrices.put(name, (ComplexMatrix)getValue(init));
+						}
+						else throw new Exception("Variable "+name+" type+"+ type +" doesn't match assigned type!");
+					}
 				}
 				default: {
 					throw new Exception("Invalid type:" + type +"!");
@@ -756,7 +777,10 @@ public class AstTraverser {
     		values.add(getValue(value));
     	}
     	Statement function = AstTraverser.functions.get(name);
-    	List<Expression> params=((Parameters) ((Function) function).getParameters()).getParams();
+    	List<Expression> params=null;
+    	if(((Function) function).getParameters()!=null){
+    		params=((Parameters) ((Function) function).getParameters()).getParams();
+    	}
     	AstTraverser astTraverser= new AstTraverser(function,params,values);
     	
     	return astTraverser.getReturn();
@@ -798,6 +822,9 @@ public class AstTraverser {
 		}*/
 		case "ensemble": {
 			return ensembles.get(name);
+		}
+		case "cmatrix": {
+			return cmatrices.get(name);
 		}
 		default: {
 			throw new Exception("No such type as "+type);
@@ -872,6 +899,10 @@ public class AstTraverser {
 					variables.put(name, type.getName());
 					ensembles.put(name, (Ensemble) value);
 					break;
+				}
+				case "cmatrix": {
+					variables.put(name, type.getName());
+					cmatrices.put(name, (ComplexMatrix) value);
 				}
 				default: {
 					throw new Exception("Invalid variable type!");
