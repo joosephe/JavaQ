@@ -1,7 +1,8 @@
 package Internals;
 
 public class Complex {
-	
+	final static Complex ZEROC=new Complex(0,0);
+	final static Complex ONEC= new Complex(1,0);
 	//Complex number z has a real an imaginary part
 	//We write z=a+bi, where i is a special number that satisfies i*i=-1;
 	float re;

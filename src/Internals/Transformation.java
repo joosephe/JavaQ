@@ -2,6 +2,14 @@ package Internals;
 
 public class Transformation extends ComplexMatrix {
 //public class Transformation {
+	
+	
+	final static Transformation HAD= new Transformation("had");
+	final static Transformation FLIP= new Transformation("flip");
+
+	
+	
+	
 
 	public Transformation(Complex[][] a) {
 		
@@ -17,6 +25,46 @@ public class Transformation extends ComplexMatrix {
 		
 		// TODO but now Transformation is still initialized. is this bad?
 	}
+	
+	public Transformation (String a){
+		Complex overSqrtTwo=new Complex((float) Math.sqrt(0.5),0);
+		Complex overMinusSqrtTwo=new Complex((float) 0-Math.sqrt(0.5),0);
+		Complex one=new Complex(1,0);
+		Complex zero= new Complex(0,0);
+		switch(a){
+			case "had":{
+				Complex[] over = new Complex[2];
+				over[0]=overSqrtTwo;
+				over[1]=overSqrtTwo;
+				Complex[] under = new Complex[2];
+				under[0]=overSqrtTwo;
+				under[1]=overMinusSqrtTwo;
+				Complex[][] ha = new Complex[2][2];
+				ha[0]=over;
+				ha[1]=under;
+				this.elems=ha;
+				this.rowCount=2;
+				this.colCount=2;
+			}
+			case "flip":{
+				Complex[] over = new Complex[2];
+				over[0]=zero;
+				over[1]=one;
+				Complex[] under = new Complex[2];
+				under[0]=one;
+				under[1]=zero;
+				Complex[][] ha = new Complex[2][2];
+				ha[0]=over;
+				ha[1]=under;
+				this.elems=ha;
+				this.rowCount=2;
+				this.colCount=2;
+			}
+			
+				
+		}
+	}
+	
 	public Transformation(int n) {
 		//does unit transformation.
 		this.rowCount=n;
@@ -25,15 +73,20 @@ public class Transformation extends ComplexMatrix {
 		Complex one =new Complex(1,0);
 		Complex zero =new Complex(0,0);
 		for(int i=0;i<rowCount;i++){
+			//System.out.println("i= " +i);
+
 			for(int j=0;j<colCount;j++){
+				//System.out.println("j= " +j);
+
 				if(i!=j){
-					this.elems[i][j]=zero;
+					mats[i][j]=zero;
 				}
 				else{
-					this.elems[i][j]=one;
+					mats[i][j]=one;
 				}
 			}
 		}
+		this.elems=mats;
 	}
 	
 	public Transformation(ComplexMatrix a) {

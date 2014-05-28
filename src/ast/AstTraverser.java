@@ -943,6 +943,32 @@ public class AstTraverser {
 				return Transformation.tensorProd(((Transformation)params.get(0)), ((Transformation) params.get(1)));
 			}
 		}
+		case "complexMatrix":{
+			//
+			int rows = (int) params.get(0);
+			int cols = (int) params.get(1);
+
+			if(params.size()!=rows*cols+2){
+				throw new Exception("Size of matrix doesn't match");
+			}
+			else{
+				//for(Object param:params){
+				for(int i = 2;i<params.size();i++){
+					if(!(params.get(i) instanceof Complex)){
+						throw new Exception("Transformation needs transformations for tensor product");
+					}
+					
+				}
+				ComplexMatrix coms = new ComplexMatrix(rows,cols);
+				for(int i=0;i<rows;i++){
+					for(int j=0;j<cols;j++){
+						coms.elems[i][j]=(Complex) params.get(i*cols+j+2);
+					}
+				}
+				//}
+				return coms;
+			}
+		}
 		
 		}
 		return "";

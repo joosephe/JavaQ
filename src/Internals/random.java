@@ -220,6 +220,48 @@ public class random {
 		//Ensemble.printEnsemble(en);
 
 	}
+	public static void DeutschJosza(){
+		QuantumState qs= new QuantumState();
+		Qubit first = Qubit.ZEROQUBIT;
+		Qubit second = Qubit.ZEROQUBIT;
+		Transformation ha =Transformation.HAD;
+		first = Transformation.apply(first, ha);
+		second = Transformation.apply(second, ha);
+		
+		qs = new QuantumState(qs,first);
+		qs = new QuantumState(qs,second);
+
+		Complex[] zeroRow= {Complex.ZEROC,Complex.ZEROC,Complex.ZEROC,Complex.ZEROC};
+
+		Complex[] firstRow= {Complex.ZEROC,Complex.ONEC,Complex.ZEROC,Complex.ZEROC};
+		Complex[] secondRow= {Complex.ONEC,Complex.ZEROC,Complex.ZEROC,Complex.ZEROC};
+		Complex[] thirdRow= {Complex.ZEROC,Complex.ZEROC,Complex.ZEROC,Complex.ONEC};
+		Complex[] fourthRow= {Complex.ZEROC,Complex.ZEROC,Complex.ONEC,Complex.ZEROC};
+		
+		Complex[][] Umat={firstRow,secondRow,thirdRow,fourthRow};
+		
+		Transformation U = new Transformation(Umat);
+		
+		qs = Transformation.apply(qs,U);
+		Transformation id = new Transformation(2);
+		
+		Transformation haid =Transformation.tensorProd(ha,id);
+		qs = Transformation.apply(qs,U);
+
+		Complex.printCom(qs.stateVector);
+		
+		qs = QuantumState.forgetAllButFirst(qs);
+		
+		System.out.println();
+
+		Complex.printCom(qs.stateVector);
+
+
+
+		
+	}
+
+	
 	
 	
 	public static String[] initialArgs;
@@ -229,7 +271,7 @@ public class random {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//initialArgs = args;
-		QubitTests();
+		DeutschJosza();
 		System.out.println("siia küll jõudsin");
 		//String asd = "circuit bool tere(int a) { int a = 9;tere(); a=3;}circuit int tere(float y){int x = 0;}";
 		//AstNode ast = gramParsingUtils.createAst(asd);

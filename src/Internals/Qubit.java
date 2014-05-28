@@ -2,6 +2,9 @@ package Internals;
 
 public class Qubit {
 	
+	final static Qubit ZEROQUBIT=new Qubit(Complex.ONEC,Complex.ZEROC);
+	final static Qubit ONEQUBIT=new Qubit(Complex.ZEROC,Complex.ONEC);
+	
 	//the names here do not necessarily mean that these things signify "yes" and "no".
 	public Complex noPart;
 	public Complex yesPart;

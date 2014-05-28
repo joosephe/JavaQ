@@ -34,6 +34,32 @@ public class QuantumState {
 		
 		this. stateVector =v;
 	}
+	private QuantumState(Complex[] stat){
+		this.stateVector=stat;
+	}
+	
+	
+	public static QuantumState forget(QuantumState st, int i){
+		//we forget the ith coordinate of the quantumstate
+		//TODO
+		return st;
+	}
+	public static QuantumState forgetAllButFirst(QuantumState st){
+		//we forget the ith coordinate of the quantumstate
+		//TODO
+		Complex zero= new Complex();
+		Complex one = new Complex();
+		int half= st.stateVector.length/2;
+		for(int i=0;i<half;i++){
+			zero = Complex.Add(zero,st.stateVector[i]);
+			one = Complex.Add(one,st.stateVector[i+half]);
+
+		}
+		Complex [] values = {zero,one};
+		QuantumState stnew = new QuantumState(values);
+		
+		return stnew;
+	}
 	
 
 }
