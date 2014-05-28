@@ -55,7 +55,7 @@ import gram.gramParser.ValueContext;
 public class AstTraverser {
 	
 	
-	
+	private static Map<String, Statement> functions = new HashMap<>();
 	private static Map<String, Boolean> bools = new HashMap<String, Boolean>();
 	private static Map<String, Integer> ints = new HashMap<String, Integer>();
 	private static Map<String, Float> floats = new HashMap<String, Float>();
