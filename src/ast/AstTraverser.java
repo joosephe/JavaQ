@@ -51,6 +51,7 @@ import gram.gramParser.StringRContext;
 import gram.gramParser.TypeContext;
 import gram.gramParser.UnaryNegationContext;
 import gram.gramParser.ValueContext;
+import gram.gramParsingUtils;
 
 public class AstTraverser {
 	
@@ -138,8 +139,8 @@ public class AstTraverser {
     }
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { int a = 9;tere();a=3;}circuit int tere(){int x = 0;}");
+		System.out.println(tree.toString());
 	}
 
 }
