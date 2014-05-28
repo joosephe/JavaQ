@@ -28,29 +28,10 @@ import ee.ut.cs.akt.aktk.ast.ExpressionStatement;
 import ee.ut.cs.akt.aktk.ast.FloatingPointLiteral;
 import ee.ut.cs.akt.aktk.ast.FunctionCall;
 import ee.ut.cs.akt.aktk.ast.IntegerLiteral;
+import ee.ut.cs.akt.aktk.ast.StringLiteral;
 import ee.ut.cs.akt.aktk.ast.Statement;
 import ee.ut.cs.akt.aktk.ast.Variable;
 import ee.ut.cs.akt.aktk.ast.WhileStatement;
-import gram.gramParser.AddingSubstractionContext;
-import gram.gramParser.BraketExpressionContext;
-import gram.gramParser.ComparisonContext;
-import gram.gramParser.ConditionalsContext;
-import gram.gramParser.DeclarationContext;
-import gram.gramParser.FunctionCallContext;
-import gram.gramParser.FunctionContext;
-import gram.gramParser.InitParametersContext;
-import gram.gramParser.LoopContext;
-import gram.gramParser.MultipleComparisonsContext;
-import gram.gramParser.MultiplicationDivisionContext;
-import gram.gramParser.NameRContext;
-import gram.gramParser.NumberRContext;
-import gram.gramParser.ParameterContext;
-import gram.gramParser.StatementContext;
-import gram.gramParser.StatementsContext;
-import gram.gramParser.StringRContext;
-import gram.gramParser.TypeContext;
-import gram.gramParser.UnaryNegationContext;
-import gram.gramParser.ValueContext;
 import gram.gramParsingUtils;
 
 public class AstTraverser {
@@ -76,9 +57,22 @@ public class AstTraverser {
         	Expression cond = ((ElseIfStatement) node).getCondition();
         	
         }
+        else if (node instanceof Program){
+            List<Statement> functs = ((Program) node).getFunctions();
+            for(Statement function : functs){
+                functions.put(((Function) function).getName(),function);
+            }
+            generateCode(functions.get("main"));
+        }
         else if (node instanceof Function) {
-        	//TODO: 
+        	List<Expression> params = ((Parameters) ((Function) node).getParameters()).getParams();
+        	for(Expression param : params){
+        		
+        	}
 
+        }
+        else if (node instanceof Block){
+        	
         }
         else if (node instanceof IfStatement) {
         	//TODO: 
@@ -86,6 +80,9 @@ public class AstTraverser {
         	Expression cond = ((ElseIfStatement) node).getCondition();
         	
 
+        }
+        else if ( node instanceof WhileStatement){
+        	
         }
         else if (node instanceof Expression) {
         	//TODO: 
@@ -105,7 +102,8 @@ public class AstTraverser {
         else if (node instanceof VariableDeclaration) {
         	//kas  ma saan nii kätte tüübi nime?
         	Expression param =  ( (VariableDeclaration) node).getParameter();
-        	String name = param.toString();
+        	Expression type = ((Parameter) param).getType();
+        	String name = ((Type) param).getName();
         	Expression init =  ( (VariableDeclaration) node).getInitializer();
         	switch (name){
         	case "int": 
@@ -133,6 +131,18 @@ public class AstTraverser {
         	
         	}
 
+        }
+        else if ( node instanceof Assignment){
+        	
+        }
+        else if ( node instanceof FunctionCall){
+        	
+        }
+        else if ( node instanceof Variable){
+        	
+        }
+        else if ( node instanceof ExpressionStatement){
+        	
         }
         
         

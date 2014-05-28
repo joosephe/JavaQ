@@ -19,4 +19,8 @@ public class Program extends AstNode {
 		return new ArrayList<Object>(functions);
 	}
 	
+	public List<Statement> getFunctions(){
+		return functions;
+	}
+	
 }

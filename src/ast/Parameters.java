@@ -17,4 +17,8 @@ public class Parameters extends Expression {
 	public List<Object> getChildren() {
 		return new ArrayList<Object>(expressions); 
 	}
+	
+	public List<Expression> getParams(){
+		return expressions;
+	}
 }
