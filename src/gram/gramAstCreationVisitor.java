@@ -173,9 +173,13 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 		String type = ctx.getChild(1).getChild(0).getText();
 		String name = ctx.getChild(2).getText();
 		Expression params = null;
-		if(ctx.getChildCount()>8)
+		Statement statements;
+		if(ctx.getChildCount()>8){
 			params = (Expression) this.visit(ctx.getChild(4));
-		Statement statements = (Statement) this.visit(ctx.getChild(7));
+			statements = (Statement) this.visit(ctx.getChild(7));
+		}
+		else
+			statements = (Statement) this.visit(ctx.getChild(6));
 		return new Function(type, name, params, statements);
 	}
 
