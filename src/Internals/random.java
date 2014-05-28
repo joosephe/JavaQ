@@ -6,7 +6,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import ee.ut.cs.akt.aktk.ast.AstNode;
-
 import gram.gramLexer;
 import gram.gramParser;
 import gram.gramParsingUtils;
@@ -123,6 +122,8 @@ public class random {
 	public static void QubitTests(){
 		Complex zero= new Complex();
 		Complex one= new Complex(1,0);
+		Complex i= new Complex(0,1);
+
 		Complex onei = new Complex(1,1);
 		Complex twominusi= new Complex(2,-1);
 		Complex minusonetwoi = new Complex(-1,2);
@@ -134,8 +135,48 @@ public class random {
 		//So we must also accept answers that are approximately one.
 		Complex c = new Complex(Math.sqrt(0.3),0.0);
 		Complex d = new Complex(Math.sqrt(0.7),0.0);
+		
+		Complex[] oneZero = new Complex[2];
+		Complex[] zeroOne = new Complex[2];
+		Complex[] zeroZero = new Complex[2];
 
+		oneZero[0]=one;
+		oneZero[1]=zero;
+		
+		zeroOne[0]=zero;
+		zeroOne[1]=one;
+		
+		zeroZero[0]=zero;
+		zeroZero[1]=zero;
+		
+		Complex[][] m1000=new Complex[2][2];
+		m1000[0]=oneZero;
+		m1000[1]=zeroZero;
+		
+		Complex[][] m0001=new Complex[2][2];
+		m0001[0]=zeroZero;
+		m0001[1]=zeroOne;
+		
+		ComplexMatrix first= new ComplexMatrix(m1000);
+		ComplexMatrix second= new ComplexMatrix(m0001);
+		
+		ComplexMatrix[] coms = new ComplexMatrix[2];
+		coms[0]=first;
+		coms[1]=second;
+		//coms[1]=first;
+		ComplexMatrix.printComMat(coms[0]);
+		ComplexMatrix.printComMat(coms[1]);
 
+		
+
+		Measurement un = new Measurement(coms);
+		
+		
+		
+		
+		System.out.println("Initializing measurement miraculously worked.");
+
+		
 		Complex[] oneVec = new Complex[3];
 		oneVec[0]=zero;
 		oneVec[1]=onei;
@@ -147,6 +188,14 @@ public class random {
 		
 		//Qubit qu = new Qubit(oneVec);
 		Qubit qu2 = new Qubit(twoVec);
+		Qubit.printQub(qu2);
+		QuantumState qs = new QuantumState(qu2);
+		int result = Measurement.apply(qs, un);
+		
+		System.out.println("Int = "+ result);
+
+		
+		
 		//Qubit.printQub(qu2);
 		//Ensemble en =new Ensemble(qu2);
 		//Ensemble.printEnsemble(en);
@@ -161,11 +210,11 @@ public class random {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//initialArgs = args;
-
+		QubitTests();
 		System.out.println("siia küll jõudsin");
-		String asd = "circuit bool tere(int a) { int a = 9;tere(); a=3;}circuit int tere(float y){int x = 0;}";
-		AstNode ast = gramParsingUtils.createAst(asd);
-		System.out.println(ast.toString());
+		//String asd = "circuit bool tere(int a) { int a = 9;tere(); a=3;}circuit int tere(float y){int x = 0;}";
+		//AstNode ast = gramParsingUtils.createAst(asd);
+		//System.out.println(ast.toString());
 		//QubitTests();
 		/*
 		ParseTree tree = createParseTree(asd);

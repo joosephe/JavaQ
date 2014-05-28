@@ -60,23 +60,27 @@ public class Measurement{
 	
 	public Measurement(ComplexMatrix[] mats) {
 		
-		//the row vectors are the different projections. 
-		//first we must check whether they are 
-		boolean isMeas=isMeasurement(mats);
-		try {
-			throw new Exception("These matrices do not form a measurement..");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for(int i=0;i<mats.length;i++){
-			this.proj[i]=mats[i];
-		}
 		
+		//the row vectors are the different projections. 
+		//first we must check whether they are a measurement
+		boolean isMeas=isMeasurement(mats);
+		if(!isMeas){
+			try {
+				throw new Exception("These matrices do not form a measurement..");
+			} catch (Exception e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			this.proj=mats;
+
+		}
 		
 		// TODO Auto-generated constructor stub
 	}
 	
+	//I think this one is not used.
 	public static Ensemble apply(Ensemble en, Measurement me){
 		Ensemble en2= new Ensemble(me.proj.length);
 		//TODO: get randomness
@@ -88,15 +92,8 @@ public class Measurement{
 
 			for(int i=0;i<en.size;i++){
 				en2.probs[j]+=en.probs[j]*measureProb(me.proj[j],en.states[i]);
-			}
-			
-			
-			
+			}	
 		}
-		
-		
-		
-		
 		return en2;
 	}
 	
