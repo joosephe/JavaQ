@@ -163,7 +163,7 @@ public class random {
 		//initialArgs = args;
 
 		System.out.println("siia küll jõudsin");
-		String asd = "circuit bool tere(int a) { int a = "+9+";tere();}";
+		String asd = "circuit bool tere(int a) { int a = 9;tere(); a=3;}circuit int tere(float y){int x = 0;}";
 		AstNode ast = gramParsingUtils.createAst(asd);
 		System.out.println(ast.toString());
 		//QubitTests();
