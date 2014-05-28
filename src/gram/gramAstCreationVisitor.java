@@ -222,6 +222,9 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 	@Override
 	public AstNode visitProgram(ProgramContext ctx) {
 		List<Statement> functions = new ArrayList<>();
+		for(int i = 0; i<ctx.getChildCount();i++){
+			functions.add((Statement)this.visit(ctx.getChild(i)));
+		}
 		return new Program(functions);
 	}
 
