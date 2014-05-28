@@ -59,7 +59,8 @@ public class AstTraverser {
 	//private Map<String, Qubit> qubits = new HashMap<String, Qubit>();
 
 	private QuantumState state= new QuantumState();
-	private Object returnObject;
+	private Object returnObject=null;
+	private boolean hasReturned=false;
 
 	
 	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value) throws Exception{
@@ -79,8 +80,9 @@ public class AstTraverser {
 
 
 	public static void main(String[] args) {        
-		AstNode tree = gramParsingUtils.createAst("circuit bool main() { int a = 3; if(a==4){int b = 2;}else{int c=4;};}");
+		AstNode tree = gramParsingUtils.createAst("circuit bool main() { int a = getPow2(3); print (a);} circuit int getPow2(int b) {int c = b*b; return(c);}");
 		System.out.println(tree.toString());
+		populateBuiltIns();
         AstTraverser interpretator;
 		try {
 			interpretator = new AstTraverser(tree, null, null);
@@ -90,74 +92,80 @@ public class AstTraverser {
 		}    
 	}
 	
+	private static void populateBuiltIns(){
+		builtIns.put("return",new BuiltIn("asd", "return"));
+		builtIns.put("print",new BuiltIn("asd", "print"));
+	}
+	
 	private Object getReturn(){
 		return returnObject;
 	}
 	
 	//private static void generateCode(AstNode node,MethodVisitor mv) {
 	private void generateCode(AstNode node) throws Exception {
-        if (node instanceof Program){
-            List<Statement> functions = ((Program) node).getFunctions();
-            for(Statement function : functions){
-                AstTraverser.functions.put(((Function) function).getName(),function);
-            }
-            generateCode(AstTraverser.functions.get("main"));
-        }
-        else if (node instanceof Function) {
-        	generateCode(((Function) node).getStatements());
-
-        }
-        else if (node instanceof Block){
-        	List<Object> list = node.getChildren();
-        	for(Object item : list){
-                generateCode((AstNode)item);
-        	}
-        	
-        }
-        else if (node instanceof IfStatement) {
-            Expression cond = ((IfStatement) node).getCondition();
-            if(checkCondition(cond)){
-                Statement statements = ((IfStatement) node).getThenBranch();
-                generateCode(statements);
-            }
-            else if(((IfStatement) node).getElseIfs()!=null){
-                List<Statement> elseIfs = ((IfStatement) node).getElseIfs();
-                for(Statement elseIf :elseIfs){
-                    if(checkCondition(((ElseIfStatement) elseIf).getCondition())){
-                        Statement statements = ((ElseIfStatement) elseIf).getThenBranch();
-                        generateCode(statements);
-                    }
-                }
-            }
-            else{
-                Statement statements = ((IfStatement) node).getElseBranch();
-                generateCode(statements);
-            }
-        }
-        else if ( node instanceof WhileStatement){
-            Expression conditions = ((WhileStatement) node).getCondition();
-            Statement statements = ((WhileStatement) node).getBody();
-            while(checkCondition(conditions)){
-                generateCode(statements);
-            }
-        }
-        else if (node instanceof VariableDeclaration) {
-        	//kas  ma saan nii kätte tüübi nime?
-            Expression param =  ( (VariableDeclaration) node).getParameter();
-            String type = ((Type) ((Parameter) param).getType()).getName();
-            String name = ((Parameter) param).getVariable();
-        	Expression init =  ( (VariableDeclaration) node).getInitializer();
-        	declareVariable(type,name,init);
-        }
-        else if ( node instanceof Assignment){
-        	String name = ((Assignment) node).getVariableName();
-        	Expression value = ((Assignment) node).getExpression();
-        	declareVariable(null,name,value);
-        }
-        else if ( node instanceof ExpressionStatement){
-        	getValue(((ExpressionStatement) node).getExpression());
-        }
-        
+		if(!hasReturned){
+	        if (node instanceof Program){
+	            List<Statement> functions = ((Program) node).getFunctions();
+	            for(Statement function : functions){
+	                AstTraverser.functions.put(((Function) function).getName(),function);
+	            }
+	            generateCode(AstTraverser.functions.get("main"));
+	        }
+	        else if (node instanceof Function) {
+	        	generateCode(((Function) node).getStatements());
+	
+	        }
+	        else if (node instanceof Block){
+	        	List<Object> list = node.getChildren();
+	        	for(Object item : list){
+	                generateCode((AstNode)item);
+	        	}
+	        	
+	        }
+	        else if (node instanceof IfStatement) {
+	            Expression cond = ((IfStatement) node).getCondition();
+	            if(checkCondition(cond)){
+	                Statement statements = ((IfStatement) node).getThenBranch();
+	                generateCode(statements);
+	            }
+	            else if(((IfStatement) node).getElseIfs()!=null){
+	                List<Statement> elseIfs = ((IfStatement) node).getElseIfs();
+	                for(Statement elseIf :elseIfs){
+	                    if(checkCondition(((ElseIfStatement) elseIf).getCondition())){
+	                        Statement statements = ((ElseIfStatement) elseIf).getThenBranch();
+	                        generateCode(statements);
+	                    }
+	                }
+	            }
+	            else{
+	                Statement statements = ((IfStatement) node).getElseBranch();
+	                generateCode(statements);
+	            }
+	        }
+	        else if ( node instanceof WhileStatement){
+	            Expression conditions = ((WhileStatement) node).getCondition();
+	            Statement statements = ((WhileStatement) node).getBody();
+	            while(checkCondition(conditions)){
+	                generateCode(statements);
+	            }
+	        }
+	        else if (node instanceof VariableDeclaration) {
+	        	//kas  ma saan nii kätte tüübi nime?
+	            Expression param =  ( (VariableDeclaration) node).getParameter();
+	            String type = ((Type) ((Parameter) param).getType()).getName();
+	            String name = ((Parameter) param).getVariable();
+	        	Expression init =  ( (VariableDeclaration) node).getInitializer();
+	        	declareVariable(type,name,init);
+	        }
+	        else if ( node instanceof Assignment){
+	        	String name = ((Assignment) node).getVariableName();
+	        	Expression value = ((Assignment) node).getExpression();
+	        	declareVariable(null,name,value);
+	        }
+	        else if ( node instanceof ExpressionStatement){
+	        	getValue(((ExpressionStatement) node).getExpression());
+	        }
+		}
         
     }
 
@@ -898,6 +906,22 @@ public class AstTraverser {
 		//add column to complexmatrix
 		
 		switch(builtIn.getName()){
+		case "print":{
+			for(Object obj : params) {
+				System.out.println(obj.toString());
+			}
+			return null;
+		}
+		case "return":{
+			if(params.size()!=1){
+				throw new Exception("Can't return multiple items!");
+			}
+			else{
+				returnObject = params.get(0);
+				hasReturned = true;
+				return null;
+			}
+		}
 		case "complex":{
 			if(params.size()!=2){
 				throw new Exception("Complex needs exactly two floating-point numbers to be initialized");
