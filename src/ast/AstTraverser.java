@@ -36,21 +36,21 @@ import gram.gramParsingUtils;
 
 public class AstTraverser {
 	
-	
-	private static Map<String, Statement> functions = new HashMap<>();
-	private static Map<String, Boolean> bools = new HashMap<String, Boolean>();
-	private static Map<String, Integer> ints = new HashMap<String, Integer>();
-	private static Map<String, Float> floats = new HashMap<String, Float>();
-	private static Map<String, Complex> complexes = new HashMap<String, Complex>();
-	private static Map<String, Qubit> qubits = new HashMap<String, Qubit>();
-	private static Map<String, Transformation> transformations = new HashMap<String, Transformation>();
-	private static Map<String, Measurement> measurements = new HashMap<String, Measurement>();
-	private static QuantumState state;
+	private Map<String, String> variables= new HashMap<>();
+	private Map<String, Statement> functions = new HashMap<>();
+	private Map<String, Boolean> bools = new HashMap<String, Boolean>();
+	private Map<String, Integer> ints = new HashMap<String, Integer>();
+	private Map<String, Float> floats = new HashMap<String, Float>();
+	private Map<String, Complex> complexes = new HashMap<String, Complex>();
+	private Map<String, Qubit> qubits = new HashMap<String, Qubit>();
+	private Map<String, Transformation> transformations = new HashMap<String, Transformation>();
+	private Map<String, Measurement> measurements = new HashMap<String, Measurement>();
+	private QuantumState state;
 	
 	
 	
 	//private static void generateCode(AstNode node,MethodVisitor mv) {
-	private static void generateCode(AstNode node) {
+	private void generateCode(AstNode node) {
         if (node instanceof ElseIfStatement) {
         	//TODO: 
         	//kuidas ma saan expressionist kätte tema tõeväärtuse?
@@ -65,13 +65,14 @@ public class AstTraverser {
             generateCode(functions.get("main"));
         }
         else if (node instanceof Function) {
-        	List<Expression> params = ((Parameters) ((Function) node).getParameters()).getParams();
-        	for(Expression param : params){
-        		
-        	}
+        	generateCode(((Function) node).getStatements());
 
         }
         else if (node instanceof Block){
+        	List<Object> list = node.getChildren();
+        	for(Object item : list){
+        		((ElseIfStatement) item).getCondition();
+        	}
         	
         }
         else if (node instanceof IfStatement) {
@@ -147,10 +148,19 @@ public class AstTraverser {
         
         
     }
-
+	
+	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value){
+		for(int i = 0; i<parameters.size();i++){ 
+			switch(((Type) ((Parameter) parameters.get(i)).getType()).getName()){
+			//TODO: cases
+			}
+			generateCode(tree);
+		}
+	}
 	public static void main(String[] args) {
 		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { int a = 9;tere();a=3;}circuit int tere(){int x = 0;}");
 		System.out.println(tree.toString());
+		AstTraverser interpretator = new AstTraverser(tree, null, null);
 	}
 
 }
