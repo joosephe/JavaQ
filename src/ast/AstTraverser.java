@@ -75,18 +75,19 @@ public class AstTraverser {
 	}
 	
     public void printInts() {
-        System.out.println("\n\n\n\n"+ints.get("a")+"\n"+ints.get("b")+"\n"+ints.get("c")+"\n"+floats.get("d"));
+        Qubit.printQub(qubits.get("c"));
     }
 
 
 	public static void main(String[] args) {        
-		AstNode tree = gramParsingUtils.createAst("circuit bool main() { int a = getPow2(3); print (a);} circuit int getPow2(int b) {int c = b*b; return(c);}");
+		AstNode tree = gramParsingUtils.createAst("circuit bool main() { float g=0.58;float h=0.46;float j=0.62;float k=-0.26;complex a=complex(0.58,h);complex b=complex(j,k);qubit c=qubit(a,b);print(c);}");
 		System.out.println(tree.toString());
 		populateBuiltIns();
         AstTraverser interpretator;
 		try {
 			interpretator = new AstTraverser(tree, null, null);
 			interpretator.printInts();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}    
@@ -95,6 +96,8 @@ public class AstTraverser {
 	private static void populateBuiltIns(){
 		builtIns.put("return",new BuiltIn("asd", "return"));
 		builtIns.put("print",new BuiltIn("asd", "print"));
+		builtIns.put("complex",new BuiltIn("complex","complex"));
+		builtIns.put("qubit",new BuiltIn("qubit","qubit"));
 	}
 	
 	private Object getReturn(){
@@ -959,12 +962,13 @@ public class AstTraverser {
 			}
 			else{
 				for(Object param:params){
-					if(!(param instanceof Float)){
+					System.out.println(param.getClass());
+					if(!(param instanceof Double)){
 						throw new Exception("Complex needs   floating-point numbers to be initialized");
 					}
 					
 				}
-				return new  Complex(((float)params.get(0)), ((float) params.get(1)));
+				return new  Complex(new Float(((Double)params.get(0))), new Float(((Double) params.get(1))));
 			}
 			
 		}
