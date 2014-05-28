@@ -80,7 +80,7 @@ public class AstTraverser {
 
 
 	public static void main(String[] args) {        
-		AstNode tree = gramParsingUtils.createAst("circuit bool main() { float g=0.58;float h=0.46;float j=0.62;float k=-0.26;complex a=complex(0.58,h);complex b=complex(j,k);qubit c=qubit(a,b);print(c);}");
+		AstNode tree = gramParsingUtils.createAst("circuit bool main() { float g=0.52;float h=0.46;float j=0.62;float k=-0.26;complex a=complex(0.58,h);complex b=complex(j,k);qubit c=qubit(a,b);print(c);}");
 		System.out.println(tree.toString());
 		populateBuiltIns();
         AstTraverser interpretator;
@@ -98,6 +98,15 @@ public class AstTraverser {
 		builtIns.put("print",new BuiltIn("asd", "print"));
 		builtIns.put("complex",new BuiltIn("complex","complex"));
 		builtIns.put("qubit",new BuiltIn("qubit","qubit"));
+		builtIns.put("applytoqubit",new BuiltIn("qubit","applytoqubit"));
+		builtIns.put("addqubittostate",new BuiltIn("asd","addqubittostate"));
+		builtIns.put("applytoquantumState",new BuiltIn("asd","applytoquantumstate"));
+		builtIns.put("measurestate",new BuiltIn("asd","measurestate"));
+		builtIns.put("measurevalue",new BuiltIn("int","measurevalue"));
+		builtIns.put("transformation",new BuiltIn("transformation","transformation"));
+		builtIns.put("measurement",new BuiltIn("measurement","measurement"));
+		builtIns.put("tensortransformation",new BuiltIn("transformation","tensorTransformation"));
+		builtIns.put("cmatrix",new BuiltIn("cmatrix","cmatrix"));
 	}
 	
 	private Object getReturn(){
