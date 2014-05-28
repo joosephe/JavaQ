@@ -1,4 +1,4 @@
-// Generated from gram.g4 by ANTLR 4.2
+// Generated from gram.g4 by ANTLR 4.2.2
 package gram;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -19,14 +19,14 @@ public class gramParser extends Parser {
 		T__27=9, T__26=10, T__25=11, T__24=12, T__23=13, T__22=14, T__21=15, T__20=16, 
 		T__19=17, T__18=18, T__17=19, T__16=20, T__15=21, T__14=22, T__13=23, 
 		T__12=24, T__11=25, T__10=26, T__9=27, T__8=28, T__7=29, T__6=30, T__5=31, 
-		T__4=32, T__3=33, T__2=34, T__1=35, T__0=36, Name=37, String=38, Bool=39, 
+		T__4=32, T__3=33, T__2=34, T__1=35, T__0=36, Bool=37, Name=38, String=39, 
 		Number=40, WS=41;
 	public static final String[] tokenNames = {
 		"<INVALID>", "','", "'while'", "'*'", "'-'", "'('", "'if'", "'ensemble'", 
 		"'<'", "'int'", "'!='", "' &'", "'<='", "'state'", "'{'", "'gate'", "'else'", 
 		"'}'", "'float'", "'elseif'", "'char'", "'qubit'", "')'", "'bool'", "'+'", 
 		"'transformation'", "'='", "'circuit'", "';'", "'complex'", "'>'", "'measurement'", 
-		"'string'", "'/'", "'=='", "'>='", "'|'", "Name", "String", "Bool", "Number", 
+		"'string'", "'/'", "'=='", "'>='", "'|'", "Bool", "Name", "String", "Number", 
 		"WS"
 	};
 	public static final int
@@ -208,7 +208,7 @@ public class gramParser extends Parser {
 				setState(58); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 2) | (1L << 4) | (1L << 5) | (1L << 6) | (1L << 7) | (1L << 9) | (1L << 13) | (1L << 15) | (1L << 18) | (1L << 20) | (1L << 21) | (1L << 23) | (1L << 25) | (1L << 29) | (1L << 31) | (1L << 32) | (1L << Name) | (1L << String) | (1L << Bool) | (1L << Number))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 2) | (1L << 4) | (1L << 5) | (1L << 6) | (1L << 7) | (1L << 9) | (1L << 13) | (1L << 15) | (1L << 18) | (1L << 20) | (1L << 21) | (1L << 23) | (1L << 25) | (1L << 29) | (1L << 31) | (1L << 32) | (1L << Bool) | (1L << Name) | (1L << String) | (1L << Number))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -542,7 +542,7 @@ public class gramParser extends Parser {
 			setState(95);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
-			while ( _alt!=2 && _alt!=-1 ) {
+			while ( _alt!=2 && _alt!=ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -722,7 +722,7 @@ public class gramParser extends Parser {
 			setState(113);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
-			while ( _alt!=2 && _alt!=-1 ) {
+			while ( _alt!=2 && _alt!=ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -823,7 +823,7 @@ public class gramParser extends Parser {
 			setState(124);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
-			while ( _alt!=2 && _alt!=-1 ) {
+			while ( _alt!=2 && _alt!=ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -921,9 +921,9 @@ public class gramParser extends Parser {
 			case 29:
 			case 31:
 			case 32:
+			case Bool:
 			case Name:
 			case String:
-			case Bool:
 			case Number:
 				_localctx = new TrivialExpression3Context(_localctx);
 				enterOuterAlt(_localctx, 2);
@@ -1027,7 +1027,7 @@ public class gramParser extends Parser {
 				setState(136); match(5);
 				setState(145);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 4) | (1L << 5) | (1L << 7) | (1L << 9) | (1L << 13) | (1L << 15) | (1L << 18) | (1L << 20) | (1L << 21) | (1L << 23) | (1L << 25) | (1L << 29) | (1L << 31) | (1L << 32) | (1L << Name) | (1L << String) | (1L << Bool) | (1L << Number))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 4) | (1L << 5) | (1L << 7) | (1L << 9) | (1L << 13) | (1L << 15) | (1L << 18) | (1L << 20) | (1L << 21) | (1L << 23) | (1L << 25) | (1L << 29) | (1L << 31) | (1L << 32) | (1L << Bool) | (1L << Name) | (1L << String) | (1L << Number))) != 0)) {
 					{
 					setState(137); expression(0);
 					setState(142);
@@ -1091,15 +1091,6 @@ public class gramParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NameRContext extends Expression5Context {
-		public TerminalNode Name() { return getToken(gramParser.Name, 0); }
-		public NameRContext(Expression5Context ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof gramVisitor ) return ((gramVisitor<? extends T>)visitor).visitNameR(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class BraketExpressionContext extends Expression5Context {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -1108,6 +1099,15 @@ public class gramParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof gramVisitor ) return ((gramVisitor<? extends T>)visitor).visitBraketExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NameRContext extends Expression5Context {
+		public TerminalNode Name() { return getToken(gramParser.Name, 0); }
+		public NameRContext(Expression5Context ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramVisitor ) return ((gramVisitor<? extends T>)visitor).visitNameR(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1136,11 +1136,11 @@ public class gramParser extends Parser {
 		try {
 			setState(159);
 			switch (_input.LA(1)) {
-			case Name:
-				_localctx = new NameRContext(_localctx);
+			case Bool:
+				_localctx = new BoolRContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(151); match(Name);
+				setState(151); match(Bool);
 				}
 				break;
 			case Number:
@@ -1157,11 +1157,11 @@ public class gramParser extends Parser {
 				setState(153); match(String);
 				}
 				break;
-			case Bool:
-				_localctx = new BoolRContext(_localctx);
+			case Name:
+				_localctx = new NameRContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(154); match(Bool);
+				setState(154); match(Name);
 				}
 				break;
 			case 5:
@@ -1403,15 +1403,15 @@ public class gramParser extends Parser {
 		"Y\3\2\2\2\24i\3\2\2\2\26k\3\2\2\2\30v\3\2\2\2\32\u0084\3\2\2\2\34\u0097"+
 		"\3\2\2\2\36\u00a1\3\2\2\2 \u00a3\3\2\2\2\"\u00ab\3\2\2\2$\u00c6\3\2\2"+
 		"\2&(\5\4\3\2\'&\3\2\2\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\3\3\2\2\2+,\7"+
-		"\35\2\2,-\5$\23\2-.\7\'\2\2.\60\7\7\2\2/\61\5\16\b\2\60/\3\2\2\2\60\61"+
+		"\35\2\2,-\5$\23\2-.\7(\2\2.\60\7\7\2\2/\61\5\16\b\2\60/\3\2\2\2\60\61"+
 		"\3\2\2\2\61\62\3\2\2\2\62\63\7\30\2\2\63\64\7\20\2\2\64\65\5\6\4\2\65"+
 		"\66\7\23\2\2\66\5\3\2\2\2\678\5\b\5\289\7\36\2\29;\3\2\2\2:\67\3\2\2\2"+
 		";<\3\2\2\2<:\3\2\2\2<=\3\2\2\2=\7\3\2\2\2>D\5\f\7\2?D\5\n\6\2@D\5 \21"+
 		"\2AD\5\"\22\2BD\5\22\n\2C>\3\2\2\2C?\3\2\2\2C@\3\2\2\2CA\3\2\2\2CB\3\2"+
-		"\2\2D\t\3\2\2\2EF\7\'\2\2FG\7\34\2\2GH\5\22\n\2H\13\3\2\2\2IL\5\20\t\2"+
+		"\2\2D\t\3\2\2\2EF\7(\2\2FG\7\34\2\2GH\5\22\n\2H\13\3\2\2\2IL\5\20\t\2"+
 		"JK\7\34\2\2KM\5\22\n\2LJ\3\2\2\2LM\3\2\2\2M\r\3\2\2\2NS\5\20\t\2OP\7\3"+
 		"\2\2PR\5\20\t\2QO\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2T\17\3\2\2\2US"+
-		"\3\2\2\2VW\5$\23\2WX\7\'\2\2X\21\3\2\2\2YZ\b\n\1\2Z[\5\24\13\2[a\3\2\2"+
+		"\3\2\2\2VW\5$\23\2WX\7(\2\2X\21\3\2\2\2YZ\b\n\1\2Z[\5\24\13\2[a\3\2\2"+
 		"\2\\]\f\4\2\2]^\t\2\2\2^`\5\24\13\2_\\\3\2\2\2`c\3\2\2\2a_\3\2\2\2ab\3"+
 		"\2\2\2b\23\3\2\2\2ca\3\2\2\2de\5\26\f\2ef\t\3\2\2fg\5\26\f\2gj\3\2\2\2"+
 		"hj\5\26\f\2id\3\2\2\2ih\3\2\2\2j\25\3\2\2\2kl\b\f\1\2lm\5\30\r\2ms\3\2"+
@@ -1420,14 +1420,14 @@ public class gramParser extends Parser {
 		"z{\t\5\2\2{}\5\32\16\2|y\3\2\2\2}\u0080\3\2\2\2~|\3\2\2\2~\177\3\2\2\2"+
 		"\177\31\3\2\2\2\u0080~\3\2\2\2\u0081\u0082\7\6\2\2\u0082\u0085\5\32\16"+
 		"\2\u0083\u0085\5\34\17\2\u0084\u0081\3\2\2\2\u0084\u0083\3\2\2\2\u0085"+
-		"\33\3\2\2\2\u0086\u0089\7\'\2\2\u0087\u0089\5$\23\2\u0088\u0086\3\2\2"+
-		"\2\u0088\u0087\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u0093\7\7\2\2\u008b\u0090"+
+		"\33\3\2\2\2\u0086\u0089\7(\2\2\u0087\u0089\5$\23\2\u0088\u0086\3\2\2\2"+
+		"\u0088\u0087\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u0093\7\7\2\2\u008b\u0090"+
 		"\5\22\n\2\u008c\u008d\7\3\2\2\u008d\u008f\5\22\n\2\u008e\u008c\3\2\2\2"+
 		"\u008f\u0092\3\2\2\2\u0090\u008e\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0094"+
 		"\3\2\2\2\u0092\u0090\3\2\2\2\u0093\u008b\3\2\2\2\u0093\u0094\3\2\2\2\u0094"+
 		"\u0095\3\2\2\2\u0095\u0098\7\30\2\2\u0096\u0098\5\36\20\2\u0097\u0088"+
 		"\3\2\2\2\u0097\u0096\3\2\2\2\u0098\35\3\2\2\2\u0099\u00a2\7\'\2\2\u009a"+
-		"\u00a2\7*\2\2\u009b\u00a2\7(\2\2\u009c\u00a2\7)\2\2\u009d\u009e\7\7\2"+
+		"\u00a2\7*\2\2\u009b\u00a2\7)\2\2\u009c\u00a2\7(\2\2\u009d\u009e\7\7\2"+
 		"\2\u009e\u009f\5\22\n\2\u009f\u00a0\7\30\2\2\u00a0\u00a2\3\2\2\2\u00a1"+
 		"\u0099\3\2\2\2\u00a1\u009a\3\2\2\2\u00a1\u009b\3\2\2\2\u00a1\u009c\3\2"+
 		"\2\2\u00a1\u009d\3\2\2\2\u00a2\37\3\2\2\2\u00a3\u00a4\7\4\2\2\u00a4\u00a5"+
