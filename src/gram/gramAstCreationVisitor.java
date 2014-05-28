@@ -125,8 +125,8 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 	public AstNode visitDeclaration(DeclarationContext ctx) {
 		Expression params = (Expression) this.visit(ctx.getChild(0));
 		Expression declarationExpression = null;
-		if (ctx.getChildCount() == 4) {
-			declarationExpression = (Expression) this.visit(ctx.getChild(3));
+		if (ctx.getChildCount() == 3) {
+			declarationExpression = (Expression) this.visit(ctx.getChild(2));
 		}
 		return new VariableDeclaration(params, declarationExpression);
 	}
@@ -207,7 +207,7 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 	@Override
 	public AstNode visitParameter(ParameterContext ctx) {
 		Expression type = (Expression) this.visit(ctx.getChild(0));
-		Expression name = (Expression) this.visit(ctx.getChild(1));
+		String name = ctx.getChild(1).getText();
 		return new Parameter(type,name);
 	}
 

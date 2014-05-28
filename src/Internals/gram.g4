@@ -83,9 +83,6 @@ type
 	|'state'	
 	|'ensemble'	
 	;
-Integer
-	:([1-9][0-9]*)|[0]
-	;
 Name
 	:[a-zA-Z][a-zA-Z0-9_]*
 	;

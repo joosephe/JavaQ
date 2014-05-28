@@ -8,9 +8,9 @@ import ee.ut.cs.akt.aktk.ast.Expression;
 public class Parameter extends Expression {
 	
 	private final Expression type;
-	private final Expression variable;
+	private final String variable;
 	
-	public Parameter( Expression type, Expression variable){
+	public Parameter( Expression type, String variable){
 		this.type = type;
 		this.variable = variable;
 	}
@@ -24,7 +24,7 @@ public class Parameter extends Expression {
 		return type;
 	}
 	
-	public Expression getVariable(){
+	public String getVariable(){
 		return variable;
 	}
 
