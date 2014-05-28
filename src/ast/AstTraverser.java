@@ -154,10 +154,12 @@ public class AstTraverser {
     }
 	
 	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value){
-		for(int i = 0; i<parameters.size();i++){ 
-			Type type = (Type) ((Parameter) parameters.get(i)).getType();
-			String name = ((Parameter) parameters.get(i)).getVariable();
-			addToMemory(type, name, value.get(i));
+		if(parameters != null) {
+			for(int i = 0; i<parameters.size();i++){ 
+				Type type = (Type) ((Parameter) parameters.get(i)).getType();
+				String name = ((Parameter) parameters.get(i)).getVariable();
+				addToMemory(type, name, value.get(i));
+			}
 		}
 		generateCode(tree);	
 	}
