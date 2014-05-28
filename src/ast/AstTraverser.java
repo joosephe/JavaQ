@@ -53,18 +53,26 @@ public class AstTraverser {
 	
 	
 	
-	
 	//private static void generateCode(AstNode node,MethodVisitor mv) {
 	private static void generateCode(AstNode node) {
         if (node instanceof ElseIfStatement) {
         	//TODO: 
-           
+        	//kuidas ma saan expressionist kätte tema tõeväärtuse?
+        	Expression cond = ((ElseIfStatement) node).getCondition();
+        	
         }
         else if (node instanceof Function) {
         	//TODO: 
 
         }
         else if (node instanceof IfStatement) {
+        	//TODO: 
+        	//kuidas ma saan expressionist kätte tema tõeväärtuse?
+        	Expression cond = ((ElseIfStatement) node).getCondition();
+        	
+
+        }
+        else if (node instanceof Expression) {
         	//TODO: 
 
         }
@@ -80,7 +88,26 @@ public class AstTraverser {
 
         }
         else if (node instanceof VariableDeclaration) {
+        	//kas  ma saan nii kätte tüübi nime?
+        	Expression param =  ( (VariableDeclaration) node).getParameter();
+        	String name = param.toString();
         	//TODO: 
+        	switch (name){
+        	case "int": 
+        		
+        		
+        	case "float":
+        	
+        	
+        	case "boolean":
+        		
+        	case "complex":
+        		
+        	
+        	
+        	
+        	
+        	}
 
         }
         
