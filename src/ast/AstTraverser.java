@@ -914,6 +914,20 @@ public class AstTraverser {
 				return new Measurement(compArray);
 			}
 		}
+		case "tensorTransformation":{
+			//computes tensor product of transformations.
+			if(params.size()!=2){
+				throw new Exception("To initialize measurement, we need at least one ComplexMatrix");
+			}
+			else{
+				for(Object param:params){
+					if(!(param instanceof Transformation)){
+						throw new Exception("Transformation needs transformations for tensor product");
+					}					
+				}
+				return Transformation.tensorProd(((Transformation)params.get(0)), ((Transformation) params.get(1)));
+			}
+		}
 		
 		}
 		return "";
