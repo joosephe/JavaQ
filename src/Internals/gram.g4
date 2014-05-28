@@ -58,10 +58,10 @@ expression4
     ;
 
 expression5
-    :   Name    # NameR
+    :   Bool # BoolR
     |   Number   # NumberR
     |   String   # StringR
-    | 	Bool # BoolR
+    | 	Name # NameR
     | '(' expression ')' # BraketExpression
     ;
 loop
@@ -84,14 +84,14 @@ type
 	|'state'	
 	|'ensemble'	
 	;
+Bool
+	: 'true'|'false'
+	;
 Name
 	:[a-zA-Z][a-zA-Z0-9_]*
 	;
 String
 	: '"' ~["\n\r] '"'
-	;
-Bool
-	: [True]|[False]
 	;
 Number
 	:([0] | ([1-9] [0-9]*)) ('.' [0-9]+)?

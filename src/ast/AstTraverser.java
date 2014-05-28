@@ -45,7 +45,7 @@ public class AstTraverser {
 	private static Map<String, BuiltIn> builtIns = new HashMap<>();
 	private Map<String, Boolean> bools = new HashMap<String, Boolean>();
 	private Map<String, Integer> ints = new HashMap<String, Integer>();
-	private Map<String, Float> floats = new HashMap<String, Float>();
+	private Map<String, Double> floats = new HashMap<String, Double>();
 	private Map<String, String> strings = new HashMap<String, String>();
 	private Map<String, Character> chars = new HashMap<String, Character>();
 	private Map<String, Complex> complexes = new HashMap<String, Complex>();
@@ -64,7 +64,7 @@ public class AstTraverser {
 	
 	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value) throws Exception{
 		if(parameters != null) {
-			for(int i = 0; i<parameters.size();i++){ 
+			for(int i = 0; i<parameters.size();i++){
 				Type type = (Type) ((Parameter) parameters.get(i)).getType();
 				String name = ((Parameter) parameters.get(i)).getVariable();
 				addToMemory(type, name, value.get(i));
@@ -72,12 +72,22 @@ public class AstTraverser {
 		}
 		generateCode(tree);	
 	}
+	
+    public void printInts() {
+        System.out.println("\n\n\n\n"+ints.get("a")+"\n"+ints.get("b")+"\n"+ints.get("c")+"\n"+floats.get("d"));
+    }
 
 
-	public static void main(String[] args) {
-		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { a = 9;((tere()));a=3;}circuit int tere(){int x = 0;}");
+	public static void main(String[] args) {        
+		AstNode tree = gramParsingUtils.createAst("circuit bool main() { int a = 3; if(a==4){int b = 2;}else{int c=4;};}");
 		System.out.println(tree.toString());
-		//AstTraverser interpretator = new AstTraverser(tree, null, null);
+        AstTraverser interpretator;
+		try {
+			interpretator = new AstTraverser(tree, null, null);
+			interpretator.printInts();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    
 	}
 	
 	private Object getReturn(){
@@ -145,7 +155,7 @@ public class AstTraverser {
         	declareVariable(null,name,value);
         }
         else if ( node instanceof ExpressionStatement){
-        	getValue((Expression)node);
+        	getValue(((ExpressionStatement) node).getExpression());
         }
         
         
@@ -158,7 +168,7 @@ public class AstTraverser {
     				type=variables.get(name);
     		        switch (type){
     		        case "int":
-    		                if(checkType(init)=="int"){
+    		                if(checkType(init).equals("int")){
     		                	variables.put(name, type);
     		                    ints.put(name, (Integer)getValue(init));
     		                }
@@ -167,15 +177,16 @@ public class AstTraverser {
     		                }
     		            break;
     		        case "float":
-    		                if(checkType(init)=="float"){
-    		                    floats.put(name, (Float)getValue(init));
+    		                if(checkType(init).equals("float")){
+    		                	variables.put(name,type);
+    		                    floats.put(name, (Double)getValue(init));
     		                }
     		                else{
     		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
     		                }
     		            break;
     		        case "bool": {
-    		                if(checkType(init)=="bool"){
+    		                if(checkType(init).equals("bool")){
     		                	variables.put(name, type);
     		                    bools.put(name, (Boolean)getValue(init));
     		                }
@@ -185,7 +196,7 @@ public class AstTraverser {
     		        	break;
     				}
     				case "complex": {
-    		                if(checkType(init)=="complex"){
+    		                if(checkType(init).equals("complex")){
     		                	variables.put(name, type);
     		                    complexes.put(name, (Complex)getValue(init));
     		                }
@@ -195,7 +206,7 @@ public class AstTraverser {
     					break;
     				}
     				case "qubit": {
-    		                if(checkType(init)=="qubit"){
+    		                if(checkType(init).equals("qubit")){
     		                	variables.put(name, type);
     		                    qubits.put(name, (Qubit)getValue(init));
     		                }
@@ -205,7 +216,7 @@ public class AstTraverser {
     					break;
     				}
     				case "transformation": {
-    		                if(checkType(init)=="transformation"){
+    		                if(checkType(init).equals("transformation")){
     		                	variables.put(name, type);
     		                    transformations.put(name, (Transformation)getValue(init));
     		                }
@@ -215,7 +226,7 @@ public class AstTraverser {
     					break;
     				}
     				case "string": {
-    		                if(checkType(init)=="string"){
+    		                if(checkType(init).equals("string")){
     		                	variables.put(name, type);
     		                    strings.put(name, (String)getValue(init));
     		                }
@@ -225,7 +236,7 @@ public class AstTraverser {
     					break;
     				}
     				case "char": {
-    		                if(checkType(init)=="char"){
+    		                if(checkType(init).equals("char")){
     		                	variables.put(name, type);
     		                    chars.put(name, (Character)getValue(init));
     		                }
@@ -235,7 +246,7 @@ public class AstTraverser {
     					break;
     				}
     				case "measurement": {
-    		                if(checkType(init)=="measurement"){
+    		                if(checkType(init).equals("measurement")){
     		                	variables.put(name, type);
     		                    measurements.put(name, (Measurement)getValue(init));
     		                }
@@ -249,7 +260,7 @@ public class AstTraverser {
     					break;
     				}*/
     				case "ensemble": {
-    		                if(checkType(init)=="ensemble"){
+    		                if(checkType(init).equals("ensemble")){
     		                	variables.put(name, type);
     		                    ensembles.put(name, (Ensemble)getValue(init));
     		                }
@@ -271,7 +282,7 @@ public class AstTraverser {
 		            	throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="int"){
+		                if(checkType(init).equals("int")){
 		                	variables.put(name, type);
 		                    ints.put(name, (Integer)getValue(init));
 		                }
@@ -285,8 +296,9 @@ public class AstTraverser {
 		            	throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="float"){
-		                    floats.put(name, (Float)getValue(init));
+		                if(checkType(init).equals("float")){
+		                	variables.put(name, type);
+		                    floats.put(name, (Double)getValue(init));
 		                }
 		                else{
 		                	throw new Exception("Variable "+name+" type "+type+" doesn't match assigned type!");
@@ -298,7 +310,7 @@ public class AstTraverser {
 		        		throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="bool"){
+		                if(checkType(init).equals("bool")){
 		                	variables.put(name, type);
 		                    bools.put(name, (Boolean)getValue(init));
 		                }
@@ -313,7 +325,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="complex"){
+		                if(checkType(init).equals("complex")){
 		                	variables.put(name, type);
 		                    complexes.put(name, (Complex)getValue(init));
 		                }
@@ -328,7 +340,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="qubit"){
+		                if(checkType(init).equals("qubit")){
 		                	variables.put(name, type);
 		                    qubits.put(name, (Qubit)getValue(init));
 		                }
@@ -343,7 +355,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="transformation"){
+		                if(checkType(init).equals("transformation")){
 		                	variables.put(name, type);
 		                    transformations.put(name, (Transformation)getValue(init));
 		                }
@@ -358,7 +370,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="string"){
+		                if(checkType(init).equals("string")){
 		                	variables.put(name, type);
 		                    strings.put(name, (String)getValue(init));
 		                }
@@ -373,7 +385,7 @@ public class AstTraverser {
 		                throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="char"){
+		                if(checkType(init).equals("char")){
 		                	variables.put(name, type);
 		                    chars.put(name, (Character)getValue(init));
 		                }
@@ -388,7 +400,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="measurement"){
+		                if(checkType(init).equals("measurement")){
 		                	variables.put(name, type);
 		                    measurements.put(name, (Measurement)getValue(init));
 		                }
@@ -407,7 +419,7 @@ public class AstTraverser {
 						throw new Exception("Variable "+name+" already declared!");
 		            }
 		            else{
-		                if(checkType(init)=="ensemble"){
+		                if(checkType(init).equals("ensemble")){
 		                	variables.put(name, type);
 		                    ensembles.put(name, (Ensemble)getValue(init));
 		                }
@@ -437,13 +449,22 @@ public class AstTraverser {
     				throw new Exception("Cannot compare something without truth value!");
     			}
     		}
+    		else if( name.equals(">") || name.equals("<") || name.equals("==") || name.equals("!=") || name.equals("<=") || name.equals(">=")){
+    			String left = checkType(((FunctionCall) expression).getArguments().get(0));
+    			String right = checkType(((FunctionCall) expression).getArguments().get(1));
+    			if(left.equals(right))
+    				return "bool";
+    			else{
+    				throw new Exception("Cannot compare "+left+" and "+right);
+    			}
+    		}
     		else if( name.equals("+") || name.equals("*")  || name.equals("/")){
     			String left = checkType(((FunctionCall) expression).getArguments().get(0));
     			String right = checkType(((FunctionCall) expression).getArguments().get(1));
     			if((left.equals("string")||left.equals("char")) && (right.equals("string") || right.equals("char")))
     				return "string";
     			if(left.equals(right) && !left.equals("bool")){
-    				return name;
+    				return left;
     			}
     			else{
     				throw new Exception("Cannot "+left+" "+name+" "+right);
@@ -463,7 +484,7 @@ public class AstTraverser {
     				String left = checkType(((FunctionCall) expression).getArguments().get(0));
         			String right = checkType(((FunctionCall) expression).getArguments().get(1));
         			if(left.equals(right) && !left.equals("bool")){
-        				return name;
+        				return left;
         			}
         			else{
         				throw new Exception("Cannot "+left+" "+name+" "+right);
@@ -525,14 +546,93 @@ public class AstTraverser {
     			boolean right = (boolean) getValue(((FunctionCall) expression).getArguments().get(1));
     			return left || right;
     		}
+    		case "<":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left < (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left < (Double)right;
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
+    		case ">":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left > (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left > (Double)right;
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "==":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left == (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left == (Double)right;
+    			}
+    			else if( left instanceof String || left instanceof Complex || left instanceof Character || left instanceof Boolean){
+    				return left.equals(right);
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "!=":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left != (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left != (Double)right;
+    			}
+    			else if( left instanceof String || left instanceof Complex || left instanceof Character || left instanceof Boolean){
+    				return !left.equals(right);
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
+    		case "<=":{
+
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left <= (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left <= (Double)right;
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
+    		case ">=":{
+    			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
+    			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
+    			if(left instanceof Integer){
+    				return (Integer)left >= (Integer)right;
+    			}
+    			else if(left instanceof Double){
+    				return (Double)left >= (Double)right;
+    			}
+    			else
+    				throw new Exception("Cannot compare "+left.getClass()+" and "+right.getClass());
+    		}
     		case "+":{
     			Object left = getValue(((FunctionCall) expression).getArguments().get(0));
     			Object right = getValue(((FunctionCall) expression).getArguments().get(1));
     			if(left instanceof Integer){
     				return (Integer)left + (Integer)right;
     			}
-    			else if(left instanceof Float){
-    				return (Float)left + (Float)right;
+    			else if(left instanceof Double){
+    				return (Double)left + (Double)right;
     			}
     			else if(left instanceof Complex){
     				return Complex.Add((Complex)left,(Complex)right);
@@ -549,8 +649,8 @@ public class AstTraverser {
     			if(left instanceof Integer){
     				return (Integer)left * (Integer)right;
     			}
-    			else if(left instanceof Float){
-    				return (Float)left * (Float)right;
+    			else if(left instanceof Double){
+    				return (Double)left * (Double)right;
     			}
     			else if(left instanceof Complex){
     				return Complex.Multiply((Complex)left,(Complex)right);
@@ -564,8 +664,8 @@ public class AstTraverser {
     			if(left instanceof Integer){
     				return (Integer)left / (Integer)right;
     			}
-    			else if(left instanceof Float){
-    				return (Float)left / (Float)right;
+    			else if(left instanceof Double){
+    				return (Double)left / (Double)right;
     			}
     			else
     				throw new Exception("Cannot divide "+left.getClass()+" and "+right.getClass());
@@ -576,8 +676,8 @@ public class AstTraverser {
     				if(object instanceof Integer){
     					return -(Integer)object;
     				}
-    				else if(object instanceof Float){
-    					return -(Float)object;
+    				else if(object instanceof Double){
+    					return -(Double)object;
     				}
     				else if(object instanceof Complex){
     					return Complex.Subtract(new Complex(0,0), (Complex)object);
@@ -590,8 +690,8 @@ public class AstTraverser {
         			if(left instanceof Integer){
         				return (Integer)left-(Integer)right;
         			}
-        			else if(left instanceof Float){
-        				return (Float)left-(Float)right;
+        			else if(left instanceof Double){
+        				return (Double)left-(Double)right;
         			}
         			else if(left instanceof Complex){
         				return Complex.Subtract((Complex)left, (Complex)right);
@@ -642,9 +742,15 @@ public class AstTraverser {
     }
     
     private Object goToFunction(String name, Expression expression) throws Exception{
-    	List<Expression> params= new ArrayList<>();
     	List<Object> values = new ArrayList<>();
-    	AstTraverser astTraverser= new AstTraverser(AstTraverser.functions.get(name),params,values);
+    	List<Expression> val = ((FunctionCall) expression).getArguments();
+    	for(Expression value :val ){
+    		values.add(getValue(value));
+    	}
+    	Statement function = AstTraverser.functions.get(name);
+    	List<Expression> params=((Parameters) ((Function) function).getParameters()).getParams();
+    	AstTraverser astTraverser= new AstTraverser(function,params,values);
+    	
     	return astTraverser.getReturn();
     }
     private Object getVariableValue(Expression expression) throws Exception{
@@ -693,7 +799,7 @@ public class AstTraverser {
     
     public boolean checkCondition(Expression condition)throws Exception{
     	if(checkType(condition).equals("bool")){
-    		return true;
+    		return (Boolean)getValue(condition);
     	}
     	else if(getValue(condition)!=null){
     		return true;
@@ -706,38 +812,47 @@ public class AstTraverser {
 		try {
 			switch(type.getName()) {
 				case "int": {
+					variables.put(name, type.getName());
 					ints.put(name, (Integer) value);
 					break;
 				}
 				case "float": {
-					floats.put(name,  (Float) value);
+					variables.put(name, type.getName());
+					floats.put(name,  (Double) value);
 					break;
 				}
 				case "bool": {
+					variables.put(name, type.getName());
 					bools.put(name, (Boolean) value);
 					break;
 				}
 				case "complex": {
+					variables.put(name, type.getName());
 					complexes.put(name,  (Complex) value);
 					break;
 				}
 				case "qubit": {
+					variables.put(name, type.getName());
 					qubits.put(name,  (Qubit) value);
 					break;
 				}
 				case "transformation": {
+					variables.put(name, type.getName());
 					transformations.put(name, (Transformation) value);
 					break;
 				}
 				case "string": {
+					variables.put(name, type.getName());
 					strings.put(name, (String) value);
 					break;
 				}
 				case "char": {
+					variables.put(name, type.getName());
 					chars.put(name, (Character) value);
 					break;
 				}
 				case "measurement": {
+					variables.put(name, type.getName());
 					measurements.put(name, (Measurement) value);
 					break;
 				}
@@ -746,15 +861,16 @@ public class AstTraverser {
 					break;
 				}*/
 				case "ensemble": {
+					variables.put(name, type.getName());
 					ensembles.put(name, (Ensemble) value);
 					break;
 				}
 				default: {
-					throw new Exception();
+					throw new Exception("Invalid variable type!");
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Invalid variable type!");
+			e.printStackTrace();
 		}
 	}
 	private Object doBuiltIn(BuiltIn builtIn, List<Object> params) throws Exception{
