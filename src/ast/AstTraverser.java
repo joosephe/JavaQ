@@ -58,7 +58,7 @@ public class AstTraverser {
 
 	//private Map<String, Qubit> qubits = new HashMap<String, Qubit>();
 
-	private QuantumState state;
+	private QuantumState state= new QuantumState();
 	private Object returnObject;
 
 	
@@ -760,7 +760,7 @@ public class AstTraverser {
 	private Object doBuiltIn(BuiltIn builtIn, List<Object> params) throws Exception{
 		
 		//We need
-		//qubit initialization from two complex numbers
+		//qubit initialization from two complex numbers Done. Untested.
 		//adding a qubit to state. Done! Untested.
 		//applying transformation to state. Done! Untested.
 		//applying transformation to qubit.Done! Untested.
@@ -794,6 +794,21 @@ public class AstTraverser {
 					
 				}
 				return new  Qubit(((Complex)params.get(0)), ((Complex) params.get(1)));
+			}
+			
+		}
+		case "addQubitToState":{
+			if(params.size()!=1){
+				throw new Exception("To extend state, we need one parameter");
+			}
+			else{
+				if(!(params.get(0) instanceof Qubit)){
+					throw new Exception("To extend state, first input must be qubit");
+				}
+				else{
+					this.state= new QuantumState(this.state, ((Qubit)params.get(0)));
+					return null;
+				}
 			}
 			
 		}
@@ -845,6 +860,28 @@ public class AstTraverser {
 				}
 			}
 		}
+		case "measureValue":{
+			//the first element is the measurement. the state is THE state.
+			//returns int value. 
+			//doesn't destroy
+			if(params.size()!=1){
+				throw new Exception("To measure quantum state, we need exactly one input");
+			}
+			else{
+				if(!(params.get(0) instanceof Measurement)){
+					throw new Exception("To measure quantum state., first input must be measurement");
+				}
+				else{
+					int value=Measurement.apply(state, ((Measurement)params.get(0)));
+					//should we destroy the state?
+					//this line is very questionaable.
+					this.state = new QuantumState();
+					
+					
+					return value;
+				}
+			}
+		}
 		case "transformation":{
 			//the first element is the complex matrix.
 			if(params.size()!=1){
@@ -864,17 +901,17 @@ public class AstTraverser {
 			//the elements are complex matrices
 			//changes the state. 
 			//TODO: this part.
-			if(params.size()!=1){
-				throw new Exception("To measure quantum state, we need exactly one input");
+			if(params.size()==0){
+				throw new Exception("To initialize measurement, we need at least one ComplexMatrix");
 			}
 			else{
-				if(!(params.get(0) instanceof ComplexMatrix)){
-					throw new Exception("To measure quantum state., first input must be measurement");
+				for(Object param:params){
+					if(!(param instanceof ComplexMatrix)){
+						throw new Exception("Measurement needs   complex matrices to be initialized");
+					}					
 				}
-				else{
-					
-					return new Transformation(   (ComplexMatrix) params.get(0)  );
-				}
+				ComplexMatrix[] compArray = params.toArray(new ComplexMatrix[params.size()]);
+				return new Measurement(compArray);
 			}
 		}
 		

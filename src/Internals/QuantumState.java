@@ -5,6 +5,13 @@ public class QuantumState {
 	
 	public Complex[] stateVector;
 	
+	//Quantumstate from zero qubits. no information.
+	public QuantumState(){
+		Complex[] v= new Complex[1];
+		v[0]=new Complex(1,0);
+		this.stateVector=v;
+	}
+	
 	//Quantumstate from a qubit
 	public QuantumState(Qubit a){
 		Complex[] v = new Complex[2];
