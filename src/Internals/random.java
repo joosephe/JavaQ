@@ -168,6 +168,25 @@ public class random {
 		ComplexMatrix.printComMat(coms[1]);
 
 		
+		Complex[][] unit2= new Complex[2][2];
+		unit2[0]=oneZero;
+		unit2[1]=zeroOne;
+		
+		Complex[][] inv2= new Complex[2][2];
+		inv2[1]=oneZero;
+		inv2[0]=zeroOne;
+		
+		Transformation same= new Transformation(unit2);
+		Transformation flip = new Transformation(inv2);
+		
+		Transformation combo = Transformation.tensorProd(same, flip);
+		System.out.println("here is wunderbar transformation. ich lieb.");
+
+		ComplexMatrix.printComMat(combo);
+		Transformation combo2 = Transformation.tensorProd(flip, same);
+		System.out.println("here is wunderbar transformation. ich lieb.");
+
+		ComplexMatrix.printComMat(combo2);
 
 		Measurement un = new Measurement(coms);
 		

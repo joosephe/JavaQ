@@ -111,21 +111,22 @@ public class Transformation extends ComplexMatrix {
 		int newRow=first.rowCount*second.rowCount;
 		int newCol=first.colCount*second.colCount;
 		Complex[][] bigmat = new Complex[newRow][newCol];
-		Transformation result = new Transformation(bigmat);
+		
 		
 		for(int i=0;i<first.rowCount; i++){
 			for(int j=0;j<second.rowCount; j++){
 				for(int k=0;k<first.colCount; k++){
 					for(int l=0;l<second.colCount; l++){
 						//bigmat[i*second.rowCount+j][k*second.colCount+l]=first.elems[]
-						result.elems[i*second.rowCount+j][k*second.colCount+l]=Complex.Multiply(first.elems[i][k],second.elems[j][l]);
+						//result.elems[i*second.rowCount+j][k*second.colCount+l]=Complex.Multiply(first.elems[i][k],second.elems[j][l]);
+						bigmat[i*second.rowCount+j][k*second.colCount+l]=Complex.Multiply(first.elems[i][k],second.elems[j][l]);
 
 					}
 				}
 			}
 		}
 		
-		
+		Transformation result = new Transformation(bigmat);
 		//TODO: write tensor product
 		return result;
 	}
