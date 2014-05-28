@@ -74,7 +74,8 @@ type
 	:'int' 	
 	|'float'	
 	|'bool'	
-	|'complex'	
+	|'complex'
+	|'cmatrix'	
 	|'qubit'	
 	|'transformation'	
 	|'gate'
@@ -83,6 +84,7 @@ type
 	|'measurement'	
 	|'state'	
 	|'ensemble'	
+	|'void'
 	;
 Bool
 	: 'true'|'false'
