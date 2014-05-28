@@ -471,6 +471,9 @@ public class AstTraverser {
     			}
     		}
     	}
+    	else if (expression instanceof BooleanLiteral){
+    		return "bool";
+    	}
     	else if (expression instanceof FloatingPointLiteral){
     		return "float";
     	}
@@ -567,5 +570,13 @@ public class AstTraverser {
 		} catch (Exception e) {
 			System.out.println("Invalid variable type!");
 		}
+	}
+	private Object doBuiltIn(BuiltIn builtIn, List<Parameters> params){
+		switch(builtIn.getName()){
+		case "qubit":{
+			
+		}
+		}
+		return "";
 	}
 }

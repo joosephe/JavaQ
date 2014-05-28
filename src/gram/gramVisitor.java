@@ -187,6 +187,13 @@ public interface gramVisitor<T> extends ParseTreeVisitor<T> {
 	T visitMultipleComparisons(@NotNull gramParser.MultipleComparisonsContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link gramParser#BoolR}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolR(@NotNull gramParser.BoolRContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link gramParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

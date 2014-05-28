@@ -61,6 +61,7 @@ expression5
     :   Name    # NameR
     |   Number   # NumberR
     |   String   # StringR
+    | 	Bool # BoolR
     | '(' expression ')' # BraketExpression
     ;
 loop
@@ -88,6 +89,9 @@ Name
 	;
 String
 	: '"' ~["\n\r] '"'
+	;
+Bool
+	: [True]|[False]
 	;
 Number
 	:([0] | ([1-9] [0-9]*)) ('.' [0-9]+)?

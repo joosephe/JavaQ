@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import ast.BooleanLiteral;
 import ast.ElseIfStatement;
 import ast.Function;
 import ast.IfStatement;
@@ -26,6 +27,7 @@ import ee.ut.cs.akt.aktk.ast.Statement;
 import ee.ut.cs.akt.aktk.ast.Variable;
 import ee.ut.cs.akt.aktk.ast.WhileStatement;
 import gram.gramParser.AddingSubstractionContext;
+import gram.gramParser.BoolRContext;
 import gram.gramParser.BraketExpressionContext;
 import gram.gramParser.ComparisonContext;
 import gram.gramParser.ConditionalsContext;
@@ -230,6 +232,16 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 			functions.add((Statement)this.visit(ctx.getChild(i)));
 		}
 		return new Program(functions);
+	}
+
+	@Override
+	public AstNode visitBoolR(BoolRContext ctx) {
+		boolean bool;
+		if(ctx.getText().equals("true"))
+			bool=true;
+		else
+			bool=false;
+		return new BooleanLiteral(bool);
 	}
 
 }

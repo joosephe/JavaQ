@@ -218,6 +218,14 @@ public class gramBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements g
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitBoolR(@NotNull gramParser.BoolRContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitProgram(@NotNull gramParser.ProgramContext ctx) { return visitChildren(ctx); }
 
 	/**
