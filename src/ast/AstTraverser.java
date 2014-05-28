@@ -9,6 +9,7 @@ import java.util.Map;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import Internals.Complex;
+import Internals.Ensemble;
 import Internals.Measurement;
 import Internals.QuantumState;
 import Internals.Qubit;
@@ -36,15 +37,18 @@ import gram.gramParsingUtils;
 
 public class AstTraverser {
 	
-	private Map<String, String> variables= new HashMap<>();
-	private Map<String, Statement> functions = new HashMap<>();
+	private Map<String, String> variables= new HashMap<>(); //Usage: type name
+	private static Map<String, Statement> functions = new HashMap<>();
 	private Map<String, Boolean> bools = new HashMap<String, Boolean>();
 	private Map<String, Integer> ints = new HashMap<String, Integer>();
 	private Map<String, Float> floats = new HashMap<String, Float>();
+	private Map<String, String> strings = new HashMap<String, String>();
+	private Map<String, Character> chars = new HashMap<String, Character>();
 	private Map<String, Complex> complexes = new HashMap<String, Complex>();
 	private Map<String, Qubit> qubits = new HashMap<String, Qubit>();
 	private Map<String, Transformation> transformations = new HashMap<String, Transformation>();
 	private Map<String, Measurement> measurements = new HashMap<String, Measurement>();
+	private Map<String, Ensemble> ensembles = new HashMap<String, Ensemble>();
 	private QuantumState state;
 	
 	
@@ -151,16 +155,72 @@ public class AstTraverser {
 	
 	public AstTraverser(AstNode tree, List<Expression> parameters, List<Object> value){
 		for(int i = 0; i<parameters.size();i++){ 
-			switch(((Type) ((Parameter) parameters.get(i)).getType()).getName()){
-			//TODO: cases
-			}
-			generateCode(tree);
+			Type type = (Type) ((Parameter) parameters.get(i)).getType();
+			String name = ((Parameter) parameters.get(i)).getVariable();
+			addToMemory(type, name, value.get(i));
 		}
+		generateCode(tree);	
 	}
+
 	public static void main(String[] args) {
 		AstNode tree = gramParsingUtils.createAst("circuit bool tere(int a) { int a = 9;tere();a=3;}circuit int tere(){int x = 0;}");
 		System.out.println(tree.toString());
 		AstTraverser interpretator = new AstTraverser(tree, null, null);
 	}
 
+	public void addToMemory(Type type, String name, Object value) {
+		try {
+			switch(type.getName()) {
+				case "int": {
+					ints.put(name, (Integer) value);
+					break;
+				}
+				case "float": {
+					floats.put(name,  (Float) value);
+					break;
+				}
+				case "bool": {
+					bools.put(name, (Boolean) value);
+					break;
+				}
+				case "complex": {
+					complexes.put(name,  (Complex) value);
+					break;
+				}
+				case "qubit": {
+					qubits.put(name,  (Qubit) value);
+					break;
+				}
+				case "transformation": {
+					transformations.put(name, (Transformation) value);
+					break;
+				}
+				case "string": {
+					strings.put(name, (String) value);
+					break;
+				}
+				case "char": {
+					chars.put(name, (Character) value);
+					break;
+				}
+				case "measurement": {
+					measurements.put(name, (Measurement) value);
+					break;
+				}
+				/*case "state": { // XXX - Is this needed?
+					state = (State) value;
+					break;
+				}*/
+				case "ensemble": {
+					ensembles.put(name, (Ensemble) value);
+					break;
+				}
+				default: {
+					throw new Exception();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Invalid variable type!");
+		}
+	}
 }

@@ -53,7 +53,7 @@ expression3
     ;
 
 expression4
-    :   Name '(' (expression (',' expression)*)? ')'   # FunctionCall
+    :   (Name|type) '(' (expression (',' expression)*)? ')'   # FunctionCall
     |   expression5                                        # TrivialExpression4
     ;
 
