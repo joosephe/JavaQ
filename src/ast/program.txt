@@ -1,0 +1,19 @@
+circuit bool main() { 
+	float g=0.52;
+	float h=0.46;
+	float j=0.62;
+	float k=-0.26;
+	complex a=complex(0.58,h);
+	complex b=complex(j,k);
+	qubit c=qubit(a,b);
+	print(c);
+	int x = 2;
+	int y = pow2(x);
+	print(y);
+	
+}
+
+circuit int pow2(int a){
+	int b = a*a;
+	return (b);
+}
