@@ -192,6 +192,11 @@ public class Complex {
 			printCom(a[i]);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return re+ " + "+ im+"i ";
+	}
 	
 	
 //not necessary

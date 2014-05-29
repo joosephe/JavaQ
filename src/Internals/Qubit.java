@@ -91,6 +91,11 @@ public class Qubit {
 
 			
 		}
+
+		@Override
+		public String toString() {
+			return noPart.re+ " + "+ noPart.im+"i " + yesPart.re+ " + "+ yesPart.im+"i ";
+		}
 		
 	
 	

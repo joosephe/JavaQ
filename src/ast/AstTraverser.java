@@ -1,5 +1,11 @@
 package ast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +14,8 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.experimental.theories.ParametersSuppliedBy;
+
+import com.sun.java_cup.internal.runtime.Scanner;
 
 import Internals.BuiltIn;
 import Internals.Complex;
@@ -75,12 +83,33 @@ public class AstTraverser {
 	}
 	
     public void printInts() {
-        Qubit.printQub(qubits.get("c"));
+        //Qubit.printQub(qubits.get("c"));
+    }
+    
+    private static String readFile(String file) throws FileNotFoundException{
+    	BufferedReader br = new BufferedReader(new FileReader(file));
+    	StringBuilder program = new StringBuilder();
+    	try {
+			String str = br.readLine();
+			while(str!=null){
+				program.append(str);
+				str= br.readLine();
+			}
+			br.close();
+			return program.toString();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return "";
     }
 
-
-	public static void main(String[] args) {        
-		AstNode tree = gramParsingUtils.createAst("circuit bool main() { float g=0.52;float h=0.46;float j=0.62;float k=-0.26;complex a=complex(0.58,h);complex b=complex(j,k);qubit c=qubit(a,b);print(c);}");
+	public static void main(String[] args) throws FileNotFoundException {  
+		String program = readFile("src/ast/program.txt");
+		AstNode tree = gramParsingUtils.createAst(program);
 		System.out.println(tree.toString());
 		populateBuiltIns();
         AstTraverser interpretator;
@@ -971,7 +1000,6 @@ public class AstTraverser {
 			}
 			else{
 				for(Object param:params){
-					System.out.println(param.getClass());
 					if(!(param instanceof Double)){
 						throw new Exception("Complex needs   floating-point numbers to be initialized");
 					}

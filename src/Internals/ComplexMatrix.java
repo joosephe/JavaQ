@@ -223,6 +223,17 @@ public class ComplexMatrix {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for(int i=0; i< rowCount;i++){
+			//System.out.println("hurraa");
+			str.append(elems[i]);
+
+		}
+		return str.toString();
+	}
+	
 	
 
 }
