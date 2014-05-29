@@ -110,7 +110,7 @@ public class AstTraverser {
 	public static void main(String[] args) throws FileNotFoundException {  
 		String program = readFile("src/ast/program.txt");
 		AstNode tree = gramParsingUtils.createAst(program);
-		System.out.println(tree.toString());
+		//System.out.println(tree.toString());
 		populateBuiltIns();
         AstTraverser interpretator;
 		try {

@@ -171,7 +171,6 @@ public class gramAstCreationVisitor extends gramBaseVisitor<AstNode> {
 
 	@Override
 	public AstNode visitFunction(FunctionContext ctx) {
-		System.out.println("I am at function");
 		Expression type = (Expression)this.visit(ctx.getChild(1));
 		String name = ctx.getChild(2).getText();
 		Expression params = null;

@@ -9,7 +9,7 @@ import ee.ut.cs.akt.aktk.ast.AstNode;
 public class gramParsingUtils {
 	static public AstNode createAst(String program) {
 		ParseTree tree = createParseTree(program);
-		System.out.println("siia küll jõudsin");
+		//System.out.println("siia küll jõudsin");
 		gramVisitor<AstNode> visitor = new gramAstCreationVisitor();
 		return tree.accept(visitor);
 	}
@@ -21,8 +21,8 @@ public class gramParsingUtils {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         gramParser parser = new gramParser(tokens);
         ParseTree tree = parser.program();
-		System.out.println("siia küll jõudsin");
-        System.out.println(tree.toStringTree(parser));
+		//System.out.println("siia küll jõudsin");
+        //System.out.println(tree.toStringTree(parser));
         return tree;
 	}
 	
